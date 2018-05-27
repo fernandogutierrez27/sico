@@ -6,5 +6,3 @@ El Sistema Informático para la Comunicación Organizacional es un proyecto para
 # TAREAS PENDIENTES:
 - [ ] Preparación de código de proyecto base
 - [ ] Preparación de BBDD
-
-/play 56k
