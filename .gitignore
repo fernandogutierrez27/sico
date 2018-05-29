@@ -3,3 +3,6 @@
 ################################################################################
 
 /.vs/sico-inacap/v15/Server/sqlite3
+/sico-inacap/obj
+/.vs/sico-inacap/v15
+/sico-inacap/bin/Debug/netcoreapp2.0
