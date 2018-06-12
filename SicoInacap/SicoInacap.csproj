@@ -197,11 +197,11 @@
     <Content Include="Views\Cargos\Details.cshtml" />
     <Content Include="Views\Cargos\Edit.cshtml" />
     <Content Include="Views\Cargos\Index.cshtml" />
-    <Content Include="Views\Recintoes\Create.cshtml" />
-    <Content Include="Views\Recintoes\Delete.cshtml" />
-    <Content Include="Views\Recintoes\Details.cshtml" />
-    <Content Include="Views\Recintoes\Edit.cshtml" />
-    <Content Include="Views\Recintoes\Index.cshtml" />
+    <Content Include="Views\Recintos\Create.cshtml" />
+    <Content Include="Views\Recintos\Delete.cshtml" />
+    <Content Include="Views\Recintos\Details.cshtml" />
+    <Content Include="Views\Recintos\Edit.cshtml" />
+    <Content Include="Views\Recintos\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
