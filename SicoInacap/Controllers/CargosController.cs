@@ -10,107 +10,107 @@ using SicoInacap.Models;
 
 namespace SicoInacap.Controllers
 {
-    public class EstadoEventoController : Controller
+    public class CargosController : Controller
     {
         private SicoModel db = new SicoModel();
 
-        // GET: EstadoEvento
+        // GET: Cargos
         public ActionResult Index()
         {
-            return View(db.EstadoEvento.ToList());
+            return View(db.Cargo.ToList());
         }
 
-        // GET: EstadoEvento/Details/5
+        // GET: Cargos/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            EstadoEvento estadoEvento = db.EstadoEvento.Find(id);
-            if (estadoEvento == null)
+            Cargo cargo = db.Cargo.Find(id);
+            if (cargo == null)
             {
                 return HttpNotFound();
             }
-            return View(estadoEvento);
+            return View(cargo);
         }
 
-        // GET: EstadoEvento/Create
+        // GET: Cargos/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: EstadoEvento/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Cargos/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Codigo,Nombre")] EstadoEvento estadoEvento)
+        public ActionResult Create([Bind(Include = "Codigo,Nombre")] Cargo cargo)
         {
             if (ModelState.IsValid)
             {
-                db.EstadoEvento.Add(estadoEvento);
+                db.Cargo.Add(cargo);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(estadoEvento);
+            return View(cargo);
         }
 
-        // GET: EstadoEvento/Edit/5
+        // GET: Cargos/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            EstadoEvento estadoEvento = db.EstadoEvento.Find(id);
-            if (estadoEvento == null)
+            Cargo cargo = db.Cargo.Find(id);
+            if (cargo == null)
             {
                 return HttpNotFound();
             }
-            return View(estadoEvento);
+            return View(cargo);
         }
 
-        // POST: EstadoEvento/Edit/5
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Cargos/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Codigo,Nombre")] EstadoEvento estadoEvento)
+        public ActionResult Edit([Bind(Include = "Codigo,Nombre")] Cargo cargo)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(estadoEvento).State = EntityState.Modified;
+                db.Entry(cargo).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(estadoEvento);
+            return View(cargo);
         }
 
-        // GET: EstadoEvento/Delete/5
+        // GET: Cargos/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            EstadoEvento estadoEvento = db.EstadoEvento.Find(id);
-            if (estadoEvento == null)
+            Cargo cargo = db.Cargo.Find(id);
+            if (cargo == null)
             {
                 return HttpNotFound();
             }
-            return View(estadoEvento);
+            return View(cargo);
         }
 
-        // POST: EstadoEvento/Delete/5
+        // POST: Cargos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            EstadoEvento estadoEvento = db.EstadoEvento.Find(id);
-            db.EstadoEvento.Remove(estadoEvento);
+            Cargo cargo = db.Cargo.Find(id);
+            db.Cargo.Remove(cargo);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
