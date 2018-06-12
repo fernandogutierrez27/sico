@@ -9,6 +9,9 @@ namespace SicoInacap.Models
     [Table("EstadoEvento")]
     public partial class EstadoEvento
     {
+
+
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public EstadoEvento()
         {
