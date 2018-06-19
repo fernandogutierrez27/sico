@@ -20,19 +20,19 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item ">
-                        @Html.ActionLink("Inicio", "Index", "Home")
+                        <a>@Html.ActionLink("Inicio", "Index", "Home", new { @class = "nav-link active" })</a>
                     </li>
                     <li class="nav-item ">
-                        @Html.ActionLink("Gestion de Usuarios", "Index", "Usuario")
+                        @Html.ActionLink("Gestion de Usuarios", "Index", "Usuario", new { @class = "nav-link" })
                     </li>
                     <li class="nav-item ">
-                        @Html.ActionLink("Gestion de Agenda", "Index", "Agenda")
+                        <a>@Html.ActionLink("Gestion de Agenda", "Index", "Agenda", new { @class = "nav-link" })</a>
                     </li>
                     <li class="nav-item ">
-                        @Html.ActionLink("Gestion de Eventos", "Index", "Evento")
+                        <a>@Html.ActionLink("Gestion de Eventos", "Index", "Eventos", new { @class = "nav-link" })</a>
                     </li>
-                    <li class="nav-item ">
-                        @Html.ActionLink("Gestion de Recintos", "Index", "Recintos")
+                    <li >
+                        @Html.ActionLink("Gestion de Recintos", "Index", "Recintos", new { @class = "nav-item nav-link" })
                     </li>
                 </ul>
                 
