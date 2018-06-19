@@ -5,16 +5,16 @@
 }
 
 <h2>Inicio</h2>
-
-<p>
+<span class="label label-success">
     @Html.ActionLink("Crear Nuevo Recinto", "Create")
-</p>
+</span>
+
 
 
     
 
 
-<table class="table">
+<table class="table table-striped">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Latitud)
@@ -43,7 +43,7 @@
             <td>
                 @Html.ActionLink("Modificar", "Edit", new { id = item.Codigo }) |
                 @Html.ActionLink("Detalle", "Details", new { id = item.Codigo }) |
-                @Html.ActionLink("Borrar", "Delete", new { id = item.Codigo })|
+                @Html.ActionLink("Borrar", "Delete", new { id = item.Codigo })
 
             </td>
         </tr>
