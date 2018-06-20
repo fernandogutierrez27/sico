@@ -9,6 +9,10 @@ namespace SicoInacap.Models
     [Table("Bloque")]
     public partial class Bloque
     {
+        public void addBloques(string blouqes)
+        {
+
+        }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Bloque()
         {
