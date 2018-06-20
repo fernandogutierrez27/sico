@@ -131,6 +131,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BloquesController.cs" />
     <Compile Include="Controllers\CargosController.cs" />
     <Compile Include="Controllers\CategoriasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -202,6 +203,11 @@
     <Content Include="Views\Recintos\Details.cshtml" />
     <Content Include="Views\Recintos\Edit.cshtml" />
     <Content Include="Views\Recintos\Index.cshtml" />
+    <Content Include="Views\Bloques\Create.cshtml" />
+    <Content Include="Views\Bloques\Delete.cshtml" />
+    <Content Include="Views\Bloques\Details.cshtml" />
+    <Content Include="Views\Bloques\Edit.cshtml" />
+    <Content Include="Views\Bloques\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
