@@ -39,9 +39,9 @@ namespace SicoInacap.Controllers
         // GET: Usuarios/Create
         public ActionResult Create()
         {
-            ViewBag.Username = new SelectList(db.Administrador, "Username", "Username");
-            ViewBag.Username = new SelectList(db.Miembro, "Username", "Fono");
-            ViewBag.Username = new SelectList(db.Simpatizante, "Username", "Apellidos");
+            //ViewBag.Username = new SelectList(db.Administrador, "Username", "Username");
+            //ViewBag.Username = new SelectList(db.Miembro, "Username", "Fono");
+            //ViewBag.Username = new SelectList(db.Simpatizante, "Username", "Apellidos");
             return View();
         }
 
@@ -59,9 +59,9 @@ namespace SicoInacap.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Username = new SelectList(db.Administrador, "Username", "Username", usuario.Username);
-            ViewBag.Username = new SelectList(db.Miembro, "Username", "Fono", usuario.Username);
-            ViewBag.Username = new SelectList(db.Simpatizante, "Username", "Apellidos", usuario.Username);
+            //ViewBag.Username = new SelectList(db.Administrador, "Username", "Username", usuario.Username);
+            //ViewBag.Username = new SelectList(db.Miembro, "Username", "Fono", usuario.Username);
+            //ViewBag.Username = new SelectList(db.Simpatizante, "Username", "Apellidos", usuario.Username);
             return View(usuario);
         }
 
@@ -77,9 +77,9 @@ namespace SicoInacap.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Username = new SelectList(db.Administrador, "Username", "Username", usuario.Username);
-            ViewBag.Username = new SelectList(db.Miembro, "Username", "Fono", usuario.Username);
-            ViewBag.Username = new SelectList(db.Simpatizante, "Username", "Apellidos", usuario.Username);
+            // ViewBag.Username = new SelectList(db.Administrador, "Username", "Username", usuario.Username);
+            //ViewBag.Username = new SelectList(db.Miembro, "Username", "Fono", usuario.Username);
+            //ViewBag.Username = new SelectList(db.Simpatizante, "Username", "Apellidos", usuario.Username);
             return View(usuario);
         }
 
@@ -96,9 +96,9 @@ namespace SicoInacap.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Username = new SelectList(db.Administrador, "Username", "Username", usuario.Username);
-            ViewBag.Username = new SelectList(db.Miembro, "Username", "Fono", usuario.Username);
-            ViewBag.Username = new SelectList(db.Simpatizante, "Username", "Apellidos", usuario.Username);
+           // ViewBag.Username = new SelectList(db.Administrador, "Username", "Username", usuario.Username);
+           // ViewBag.Username = new SelectList(db.Miembro, "Username", "Fono", usuario.Username);
+           // ViewBag.Username = new SelectList(db.Simpatizante, "Username", "Apellidos", usuario.Username);
             return View(usuario);
         }
 
