@@ -21,7 +21,6 @@ namespace SicoInacap.Models
         public string Username { get; set; }
 
         public DateTime FechaInscripcion { get; set; }
-  
 
         [Required]
         public string Password { get; set; }
