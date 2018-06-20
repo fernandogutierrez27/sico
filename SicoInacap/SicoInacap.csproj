@@ -19,10 +19,8 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
-    <IISExpressAnonymousAuthentication>
-    </IISExpressAnonymousAuthentication>
-    <IISExpressWindowsAuthentication>
-    </IISExpressWindowsAuthentication>
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>enabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
@@ -133,12 +131,11 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\AdministradorsController.cs" />
+    <Compile Include="Controllers\BloquesController.cs" />
     <Compile Include="Controllers\CargosController.cs" />
     <Compile Include="Controllers\CategoriasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RecintosController.cs" />
-    <Compile Include="Controllers\UsuariosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -206,16 +203,11 @@
     <Content Include="Views\Recintos\Details.cshtml" />
     <Content Include="Views\Recintos\Edit.cshtml" />
     <Content Include="Views\Recintos\Index.cshtml" />
-    <Content Include="Views\Usuarios\Create.cshtml" />
-    <Content Include="Views\Usuarios\Delete.cshtml" />
-    <Content Include="Views\Usuarios\Details.cshtml" />
-    <Content Include="Views\Usuarios\Edit.cshtml" />
-    <Content Include="Views\Usuarios\Index.cshtml" />
-    <Content Include="Views\Administradors\Create.cshtml" />
-    <Content Include="Views\Administradors\Delete.cshtml" />
-    <Content Include="Views\Administradors\Details.cshtml" />
-    <Content Include="Views\Administradors\Edit.cshtml" />
-    <Content Include="Views\Administradors\Index.cshtml" />
+    <Content Include="Views\Bloques\Create.cshtml" />
+    <Content Include="Views\Bloques\Delete.cshtml" />
+    <Content Include="Views\Bloques\Details.cshtml" />
+    <Content Include="Views\Bloques\Edit.cshtml" />
+    <Content Include="Views\Bloques\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
