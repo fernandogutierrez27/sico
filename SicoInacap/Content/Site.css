@@ -3,3 +3,11 @@
 .link{
     text-decoration:none;
 }
+
+.deleteBtn {
+    padding:5px 3px;
+}
+
+.map{
+    height: 100%;
+}

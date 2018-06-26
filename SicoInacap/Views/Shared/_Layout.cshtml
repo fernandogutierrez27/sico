@@ -19,8 +19,8 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item "> 
-                        @Html.ActionLink("Inicio", "Index", "Home", null , new { @class = "nav-link" })
+                    <li class="nav-item ">
+                        @Html.ActionLink("Inicio", "Index", "Home", null, new { @class = "nav-link" })
                     </li>
                     <li class="nav-item ">
                         @Html.ActionLink("Gestion de Usuarios", "Index", "Usuario", null, new { @class = "nav-link" })
@@ -32,15 +32,15 @@
                         @Html.ActionLink("Gestion de Eventos", "Index", "Eventos", null, new { @class = "nav-link" })
                     </li>
                     <li class="nav-item ">
-                        @Html.ActionLink("Gestion de Recintos", "Index", "Recintos", null, new { @class = "nav-link"})
+                        @Html.ActionLink("Gestion de Recintos", "Index", "Recintos", null, new { @class = "nav-link" })
                     </li>
                 </ul>
-                
+
             </div>
         </nav>
     </div>
-    
-    <div class="container body-content">
+
+    <div class="container">
         @RenderBody()
         <hr />
         <footer>
@@ -48,6 +48,19 @@
         </footer>
     </div>
 
+    
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8-xszb_U0t3DlkGRnWFp3vigBKbML7XE&callback=inicializacion" async defer>
+
+    </script>
+
+
+
+
+    <script>
+        $('#myModal').on('shown.bs.modal', function () {
+            $('#myInput').trigger('focus')
+        })
+    </script>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
