@@ -4,49 +4,53 @@
     ViewBag.Title = "Inicio Recinto";
 }
 
-<h2>Inicio</h2>
+<nav aria-label="breadcrumb" class="mt-2">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">@Html.ActionLink("Gestion de Recintos", "Index", "Recintos", null)</li>
+    </ol>
+</nav>
 <span class="label label-success">
-    @Html.ActionLink("Crear Nuevo Recinto", "Create")
+    
 </span>
 
+<span class="badge badge-pill badge-primary mb-2">
+    @Html.ActionLink("Crear Nuevo Recinto", "Create", null , new {@class = "nav-link text-light" })
+</span>
 
-
-    
-
-
-<table class="table table-striped">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Latitud)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Longitud)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+<table class="table table-striped table-dark">
+    <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Latitud)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Longitud)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.ActionLink("Modificar", "Edit", new { id = item.Codigo }) |
-                @Html.ActionLink("Detalle", "Details", new { id = item.Codigo }) |
-                @Html.ActionLink("Borrar", "Delete", new { id = item.Codigo })
-
-            </td>
+            <th>@Html.DisplayNameFor(model => model.Latitud)</th>
+            <th>@Html.DisplayNameFor(model => model.Longitud)</th>
+            <th>@Html.DisplayNameFor(model => model.Nombre)</th>
         </tr>
-    }
-
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Latitud)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Longitud)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    <span class="badge badge-pill badge-warning mb-2">
+                        @Html.ActionLink("Modificar", "Edit",  new { id = item.Codigo} , new { @class = "nav-link text-light" })
+                    </span>
+                    <span class="badge badge-pill badge-info mb-2">
+                        @Html.ActionLink("Detalle", "Details", new { id = item.Codigo} , new { @class = "nav-link text-light" })
+                    </span>
+                    <span class="badge badge-pill badge-danger mb-2">
+                        @Html.ActionLink("Borrar", "Delete", new { id = item.Codigo }, new { @class = "nav-link text-light" })
+                    </span>
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
+
