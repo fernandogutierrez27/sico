@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<SicoInacap.Models.Evento>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Listado de evento";
 }
 
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Crear evento", "Create")
 </p>
 <table class="table">
     <tr>
@@ -55,9 +55,9 @@
             @Html.DisplayFor(modelItem => item.Nombre)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Codigo }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Codigo }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Codigo })
+            @Html.ActionLink("Modificar", "Edit", new { id=item.Codigo }) |
+            @Html.ActionLink("Detalle", "Details", new { id=item.Codigo }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id=item.Codigo })
         </td>
     </tr>
 }

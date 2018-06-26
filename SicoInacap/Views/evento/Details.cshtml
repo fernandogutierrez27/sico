@@ -1,7 +1,7 @@
 ﻿@model SicoInacap.Models.Evento
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalle evento";
 }
 
 <h2>Details</h2>
@@ -11,7 +11,8 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Administrador.Username)
+            @Html.DisplayName("Organizador")
+            
         </dt>
 
         <dd>
@@ -19,7 +20,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Categoria.Nombre)
+            @Html.DisplayName("Categoria")
         </dt>
 
         <dd>
@@ -27,7 +28,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.EstadoEvento.Nombre)
+            @Html.DisplayName("Estado")
         </dt>
 
         <dd>
@@ -35,11 +36,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Miembro.Fono)
+            @Html.DisplayName("Responsable")
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Miembro.Fono)
+            @Html.DisplayFor(model => model.Miembro.Username)
         </dd>
 
         <dt>
@@ -61,6 +62,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Codigo }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Modificar evento", "Edit", new { id = Model.Codigo }) |
+    @Html.ActionLink("Volver a la lista", "Index")
 </p>

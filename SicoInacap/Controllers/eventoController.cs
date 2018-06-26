@@ -63,7 +63,7 @@ namespace SicoInacap.Controllers
             ViewBag.UsernameOrganizador = new SelectList(db.Administrador, "Username", "Username", evento.UsernameOrganizador);
             ViewBag.CodigoCategoria = new SelectList(db.Categoria, "Codigo", "Nombre", evento.CodigoCategoria);
             ViewBag.CodigoEstado = new SelectList(db.EstadoEvento, "Codigo", "Nombre", evento.CodigoEstado);
-            ViewBag.UsernameResponsable = new SelectList(db.Miembro, "Username", "Fono", evento.UsernameResponsable);
+            ViewBag.UsernameResponsable = new SelectList(db.Simpatizante.Where(simpatizante => db.Miembro.Any(miembro => miembro.Username == simpatizante.Username)), "Username", "Nombres", evento.UsernameResponsable);
             return View(evento);
         }
 
