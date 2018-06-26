@@ -10,107 +10,107 @@ using SicoInacap.Models;
 
 namespace SicoInacap.Controllers
 {
-    public class CategoriasController : Controller
+    public class EstadoEventoController : Controller
     {
         private SicoModel db = new SicoModel();
 
-        // GET: Categorias
+        // GET: EstadoEvento
         public ActionResult Index()
         {
-            return View(db.Categoria.ToList());
+            return View(db.EstadoEvento.ToList());
         }
 
-        // GET: Categorias/Details/5
+        // GET: EstadoEvento/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Categoria categoria = db.Categoria.Find(id);
-            if (categoria == null)
+            EstadoEvento estadoEvento = db.EstadoEvento.Find(id);
+            if (estadoEvento == null)
             {
                 return HttpNotFound();
             }
-            return View(categoria);
+            return View(estadoEvento);
         }
 
-        // GET: Categorias/Create
+        // GET: EstadoEvento/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Categorias/Create
+        // POST: EstadoEvento/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Codigo,Nombre,Icono")] Categoria categoria)
+        public ActionResult Create([Bind(Include = "Codigo,Nombre")] EstadoEvento estadoEvento)
         {
             if (ModelState.IsValid)
             {
-                db.Categoria.Add(categoria);
+                db.EstadoEvento.Add(estadoEvento);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(categoria);
+            return View(estadoEvento);
         }
 
-        // GET: Categorias/Edit/5
+        // GET: EstadoEvento/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Categoria categoria = db.Categoria.Find(id);
-            if (categoria == null)
+            EstadoEvento estadoEvento = db.EstadoEvento.Find(id);
+            if (estadoEvento == null)
             {
                 return HttpNotFound();
             }
-            return View(categoria);
+            return View(estadoEvento);
         }
 
-        // POST: Categorias/Edit/5
+        // POST: EstadoEvento/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Codigo,Nombre,Icono")] Categoria categoria)
+        public ActionResult Edit([Bind(Include = "Codigo,Nombre")] EstadoEvento estadoEvento)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(categoria).State = EntityState.Modified;
+                db.Entry(estadoEvento).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(categoria);
+            return View(estadoEvento);
         }
 
-        // GET: Categorias/Delete/5
+        // GET: EstadoEvento/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Categoria categoria = db.Categoria.Find(id);
-            if (categoria == null)
+            EstadoEvento estadoEvento = db.EstadoEvento.Find(id);
+            if (estadoEvento == null)
             {
                 return HttpNotFound();
             }
-            return View(categoria);
+            return View(estadoEvento);
         }
 
-        // POST: Categorias/Delete/5
+        // POST: EstadoEvento/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Categoria categoria = db.Categoria.Find(id);
-            db.Categoria.Remove(categoria);
+            EstadoEvento estadoEvento = db.EstadoEvento.Find(id);
+            db.EstadoEvento.Remove(estadoEvento);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

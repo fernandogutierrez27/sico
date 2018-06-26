@@ -1,22 +1,16 @@
-﻿@model IEnumerable<SicoInacap.Models.Recinto>
+﻿@model IEnumerable<SicoInacap.Models.EstadoEvento>
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Crear Recintos</h2>
+<h2>Index</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Latitud)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Longitud)
-        </th>
         <th>
             @Html.DisplayNameFor(model => model.Nombre)
         </th>
@@ -25,12 +19,6 @@
 
 @foreach (var item in Model) {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Latitud)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Longitud)
-        </td>
         <td>
             @Html.DisplayFor(modelItem => item.Nombre)
         </td>
