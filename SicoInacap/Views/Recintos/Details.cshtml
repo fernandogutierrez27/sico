@@ -4,7 +4,12 @@
     ViewBag.Title = "Detalle";
 }
 
-<h2>Detalles</h2>
+<nav aria-label="breadcrumb" class="mt-2">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">@Html.ActionLink("Gestion de Recintos", "Index", "Recintos")</li>
+        <li class="breadcrumb-item active">Detalle</li>
+    </ol>
+</nav>
 
 <div>
     <h4>Recinto</h4>
