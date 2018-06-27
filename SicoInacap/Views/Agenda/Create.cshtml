@@ -6,6 +6,19 @@
 
 <h2>Create</h2>
 
+<div id="messageModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="alert">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Error</h3>
+            </div>
+            <div class="modal-body">
+                <div id="pMessage" class="alert alert-danger" role="alert"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div id="myModal" class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="form">
         <div class="modal-content">
@@ -121,6 +134,7 @@
                 success: function (data) {
                     $.each(data, function (i, v) {
                         events.push({
+                            constraint: v.id,
                             title: v.title,
                             description: v.description,
                             start: moment(v.start),
@@ -164,36 +178,61 @@
                 eventColor: '',
                 events: events,
                 eventClick: function (calEvent, jsEvent, view) {
-                    console.log(calEvent);
+                    let id = calEvent.constraint;
+                    let title = calEvent.title;
+                    let description = calEvent.description;
+                    let start = calEvent.start;
+                    let end = calEvent.end;
+                    let color = calEvent.colo;
                 },
                 selectable: true,
-                select: function (startDate, endDate){
+                select: function (startDate, endDate) {
+
+                    let now = new Date();
                     let start = new Date(startDate.format());
                     let end = new Date(endDate.format());
+                    if (start > now) {
+                        let evento = $('#idEvento').val();
+                        if (evento != null) {
+                            let displayStartDate = start.getDate() + " de " + getMonth(start.getMonth()) + " del " + start.getFullYear();
+                            let displayEndDate = end.getDate() + " de " + getMonth(end.getMonth()) + " del " + end.getFullYear();
+                            let displayStartHour = start.getHours() > 9 ? start.getHours() + ":00" : "0" + start.getHours() + ":00";
+                            let displayEndtHour = end.getHours() > 9 ? end.getHours() + ":00" : "0" + end.getHours() + ":00";
 
-                    let displayStartDate = start.getDate() + " de " + getMonth(start.getMonth()) + " del " + start.getFullYear();
-                    let displayEndDate = end.getDate() + " de " + getMonth(end.getMonth()) + " del " + end.getFullYear();
-                    let displayStartHour = start.getHours() > 9 ? start.getHours() + ":00" : "0" + start.getHours() + ":00";
-                    let displayEndtHour = end.getHours() > 9 ? end.getHours() + ":00" : "0" + end.getHours() + ":00";
+                            $('#tbxRecinto').val($('#idRecinto option:selected').text());
+                            $('#fechaInicio').val(displayStartDate);
+                            $('#fechaInicio').attr('name', start.toString());
+                            $('#horaInicio').val(displayStartHour);
+                            $('#fechaFin').val(displayEndDate);
+                            $('#fechaFin').attr('name', end.toString());
+                            $('#horaFin').val(displayEndtHour);
+                            if (start.getFullYear() == end.getFullYear() && start.getMonth() == end.getMonth() && start.getDate() == end.getDate()) {
+                                $('#lbStartDate').html("Fecha");
+                                $('#displayEndDate').hide();
+                            } else {
+                                $('#lbStartDate').html("Fecha Inicial");
+                                $('#displayEndDate').show();
+                            }
 
-                    $('#tbxRecinto').val($('#idRecinto option:selected').text());
-                    $('#fechaInicio').val(displayStartDate);
-                    $('#fechaInicio').attr('name', start.toString());
-                    $('#horaInicio').val(displayStartHour);
-                    $('#fechaFin').val(displayEndDate);
-                    $('#fechaFin').attr('name', end.toString());
-                    $('#horaFin').val(displayEndtHour);
-                    if (start.getFullYear() == end.getFullYear() && start.getMonth() == end.getMonth() && start.getDate() == end.getDate()) {
-                        $('#lbStartDate').html("Fecha");
-                        $('#displayEndDate').hide();
+                            $('#myModal').modal('show');
+                        } else {
+                            showErrorMessage('No existen eventos disponibles para agendar.', 5);
+                        }
                     } else {
-                        $('#lbStartDate').html("Fecha Inicial");
-                        $('#displayEndDate').show();
+                        showErrorMessage('Por favor seleccione una fecha y hora de inicio mayor que la actual.', 5);
                     }
 
-                    $('#myModal').modal('show');
                 }
             });
+        }
+
+        function showErrorMessage(message, seconds) {
+            $('#pMessage').html('<b>' + message + '</b>');
+            $('#messageModal').modal('show');
+            setTimeout(() => {
+                $('#pMessage').html('');
+                $('#messageModal').modal('hide');
+            }, (seconds * 1000));
         }
 
         function programarEvento() {
@@ -215,12 +254,11 @@
                     HoraInicio: fechaInicio,
                     HoraTermino: fechaFin
                 },
-                success: function (data) {
-                    window.location.href = "/Agenda/Create";
-                    console.log(data);
+                success: function (recintoId) {
+                    window.location.assign('/Agenda/Create/?recintoId=' + recintoId);
                 },
                 error: function (error) {
-                    console.log(error);
+                    alert(error);
                 }
             });
 
@@ -250,7 +288,8 @@
         }
 
         $(document).ready(function () {
-
+            let recintoId = $('#idRecinto').val();
+            CambiarRecinto(recintoId);
         });
     </script>
 }

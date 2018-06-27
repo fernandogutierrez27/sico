@@ -40,10 +40,15 @@ namespace SicoInacap.Controllers
         // GET: Agenda/Create
         public ActionResult Create()
         {
-            ViewBag.CodigoEvento = new SelectList(db.Evento, "Codigo", "Descripcion");
+            string recintoId = Request.QueryString["recintoId"];
+            if(!string.IsNullOrEmpty(recintoId))
+                ViewBag.CodigoEvento = new SelectList(db.Evento.Where(e => e.EstadoEvento.Codigo == 1).ToList(), "Codigo", "Descripcion", int.Parse(recintoId));
+            else
+                ViewBag.CodigoEvento = new SelectList(db.Evento.Where(e => e.EstadoEvento.Codigo == 1).ToList(), "Codigo", "Descripcion");
+
             ViewBag.CodigoRecinto = new SelectList(db.Recinto, "Codigo", "Nombre");
             ViewBag.HoraInicio = new SelectList(db.Bloque, "HoraInicio", "HoraInicio");
-            return View();
+            return View(new Agenda { CodigoRecinto = 2, Recinto = db.Recinto.Find(2) });
         }
 
         public JsonResult GetAgenda()
@@ -54,6 +59,7 @@ namespace SicoInacap.Controllers
                 if (item.CodigoRecinto.ToString().Equals(recintoId))
                     list.Add(new
                     {
+                        id = item.Codigo,
                         title = item.Evento.Nombre,
                         description = item.Evento.Descripcion,
                         start = item.HoraInicio.Year + "-" + item.HoraInicio.Month + "-" + item.HoraInicio.Day + " " + item.HoraInicio.Hour + ":00:00",
@@ -70,7 +76,11 @@ namespace SicoInacap.Controllers
                 agenda.Evento = db.Evento.Find(agenda.CodigoEvento);
                 agenda.Recinto = db.Recinto.Find(agenda.CodigoRecinto);
                 db.Agenda.Add(agenda);
-                db.SaveChanges();
+                if(db.SaveChanges() > 0)
+                {
+                    db.Evento.Find(agenda.Evento.Codigo).EstadoEvento = db.EstadoEvento.Find(2);
+                    db.SaveChanges();
+                }
                 return new JsonResult { Data = agenda.CodigoRecinto, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
             catch(Exception ex)
