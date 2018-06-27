@@ -37,18 +37,27 @@ namespace SicoInacap.Controllers
             return View(agenda);
         }
 
-        // GET: Agenda/Create
-        public ActionResult Create()
+        // GET: Agenda/Calendario
+        public ActionResult Calendario()
         {
             string recintoId = Request.QueryString["recintoId"];
-            if(!string.IsNullOrEmpty(recintoId))
+            if (!string.IsNullOrEmpty(recintoId))
                 ViewBag.CodigoEvento = new SelectList(db.Evento.Where(e => e.EstadoEvento.Codigo == 1).ToList(), "Codigo", "Descripcion", int.Parse(recintoId));
             else
                 ViewBag.CodigoEvento = new SelectList(db.Evento.Where(e => e.EstadoEvento.Codigo == 1).ToList(), "Codigo", "Descripcion");
 
             ViewBag.CodigoRecinto = new SelectList(db.Recinto, "Codigo", "Nombre");
             ViewBag.HoraInicio = new SelectList(db.Bloque, "HoraInicio", "HoraInicio");
-            return View(new Agenda { CodigoRecinto = 2, Recinto = db.Recinto.Find(2) });
+            return View();
+        }
+
+        // GET: Agenda/Create
+        public ActionResult Create()
+        {
+            ViewBag.CodigoEvento = new SelectList(db.Evento, "Codigo", "Descripcion");
+            ViewBag.CodigoRecinto = new SelectList(db.Recinto, "Codigo", "Nombre");
+            ViewBag.HoraInicio = new SelectList(db.Bloque, "HoraInicio", "HoraInicio");
+            return View();
         }
 
         public JsonResult GetAgenda()
