@@ -23,7 +23,7 @@
             
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Miembro.Fono)
+            @Html.DisplayName("Responsable")
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Descripcion)
@@ -46,7 +46,7 @@
             @Html.DisplayFor(modelItem => item.EstadoEvento.Nombre)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Miembro.Fono)
+            @Html.DisplayFor(modelItem => item.Miembro.Username)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Descripcion)
