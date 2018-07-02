@@ -4,11 +4,19 @@
     ViewBag.Title = "Listado de evento";
 }
 
-<h2>Index</h2>
+<nav aria-label="breadcrumb" class="mt-2">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">@Html.ActionLink("Gestion de Eventos", "Index", "Eventos", null)</li>
+    </ol>
+</nav>
+<span class="label label-success">
 
-<p>
-    @Html.ActionLink("Crear evento", "Create")
-</p>
+</span>
+
+<span class="badge badge-pill badge-primary mb-2">
+    @Html.ActionLink("Crear Nuevo Evento", "Create", null, new { @class = "nav-link text-light" })
+</span>
+
 <table class="table">
     <tr>
         <th>
@@ -16,11 +24,11 @@
         </th>
         <th>
             @Html.DisplayName("Categoria")
-            
+
         </th>
         <th>
             @Html.DisplayName("Estado")
-            
+
         </th>
         <th>
             @Html.DisplayName("Responsable")
@@ -34,32 +42,33 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Administrador.Username)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Categoria.Nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EstadoEvento.Nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Miembro.Username)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Descripcion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nombre)
-        </td>
-        <td>
-            @Html.ActionLink("Modificar", "Edit", new { id=item.Codigo }) |
-            @Html.ActionLink("Detalle", "Details", new { id=item.Codigo }) |
-            @Html.ActionLink("Eliminar", "Delete", new { id=item.Codigo })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Administrador.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Categoria.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EstadoEvento.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Miembro.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.ActionLink("Modificar", "Edit", new { id = item.Codigo }) |
+                @Html.ActionLink("Detalle", "Details", new { id = item.Codigo }) |
+                @Html.ActionLink("Eliminar", "Delete", new { id = item.Codigo })
+            </td>
+        </tr>
+    }
 
 </table>
