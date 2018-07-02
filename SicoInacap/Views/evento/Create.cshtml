@@ -1,20 +1,28 @@
 ﻿@model SicoInacap.Models.Evento
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Crear evento";
 }
 
+<nav aria-label="breadcrumb" class="mt-2">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">@Html.ActionLink("Gestion de eventos", "Index", "Eventos")</li>
+        <li class="breadcrumb-item active">Crear evento</li>
+    </ol>
+</nav>
 
+<span class="badge badge-pill badge-success mb-2">
+    @Html.ActionLink("Regresar", "Index", null, new { @class = "nav-link text-light" })
+</span>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Evento</h4>
-        <hr />
+              
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        
+
         <div class="form-group">
             @Html.LabelFor(model => model.Codigo, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -80,16 +88,14 @@
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+            <div class="col-md-offset-2 col-md-12">
+                <input type="submit" value="Create" class="btn btn-primary btn-lg btn-block" />
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
