@@ -4,17 +4,26 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<nav aria-label="breadcrumb" class="mt-2">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">@Html.ActionLink("Gestion de Recintos", "Index", "Recintos")</li>
+        <li class="breadcrumb-item active">Crear Recinto</li>
+    </ol>
+</nav>
 
+<span class="badge badge-pill badge-success mb-2">
+    @Html.ActionLink("Regresar", "Index", null, new { @class = "nav-link text-light" })
+</span>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Evento</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        
         <div class="form-group">
             @Html.LabelFor(model => model.Codigo, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
