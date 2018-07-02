@@ -4,16 +4,7 @@
     ViewBag.Title = "Create";
 }
 
-<nav aria-label="breadcrumb" class="mt-2">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">@Html.ActionLink("Gestion de Recintos", "Index", "Recintos")</li>
-        <li class="breadcrumb-item active">Crear Recinto</li>
-    </ol>
-</nav>
 
-<span class="badge badge-pill badge-success mb-2">
-    @Html.ActionLink("Regresar", "Index", null, new { @class = "nav-link text-light" })
-</span>
 
 @using (Html.BeginForm())
 {
