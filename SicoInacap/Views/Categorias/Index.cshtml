@@ -14,6 +14,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Nombre)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Icono)
+        </th>
         <th></th>
     </tr>
 
@@ -23,9 +26,12 @@
             @Html.DisplayFor(modelItem => item.Nombre)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Codigo }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Codigo }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Codigo })
+            @Html.DisplayFor(modelItem => item.Icono)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Codigo }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Codigo }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Codigo })
         </td>
     </tr>
 }

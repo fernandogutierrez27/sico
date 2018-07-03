@@ -20,16 +20,12 @@ namespace SicoInacap.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Codigo { get; set; }
-
         public int CodigoCategoria { get; set; }
 
         public int CodigoEstado { get; set; }
 
         [Required]
         public string Descripcion { get; set; }
-
-        [Required]
-        public string Icono { get; set; }
 
         [Required]
         public string Nombre { get; set; }
