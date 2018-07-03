@@ -1,10 +1,4 @@
-﻿@{
-    if (Session["username"] == null)
-    {
-        Response.Redirect("~/Login/index");
-    }
-}
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -23,19 +17,12 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Nombre de aplicación", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("SICO", "Index", "Login", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Bloques", "Index", "Bloques")</li>
-                    <li>@Html.ActionLink("Cargos", "Index", "Cargos")</li>
-                    <li>@Html.ActionLink("Categorías", "Index", "Categorias")</li>
-                    <li>@Html.ActionLink("Recintos", "Index", "Recintos")</li>
+                    <li>@Html.ActionLink("Login", "Index", "Login")</li>
                 </ul>
-                @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
