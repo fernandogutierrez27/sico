@@ -77,3 +77,13 @@ _[Ss]cripts
 *.ncrunchsolution
 *.dot[Cc]over
 /.vs
+/SicoInacap/Views/Recintos/Index.cshtml~origin_fusion2
+/SicoInacap/Views/Recintos/Index.cshtml~HEAD
+/SicoInacap/Views/Recintos/Edit.cshtml~origin_fusion2
+/SicoInacap/Views/Recintos/Edit.cshtml~HEAD
+/SicoInacap/Views/Recintos/Details.cshtml~origin_fusion2
+/SicoInacap/Views/Recintos/Details.cshtml~HEAD
+/SicoInacap/Views/Recintos/Delete.cshtml~origin_fusion2
+/SicoInacap/Views/Recintos/Delete.cshtml~HEAD
+/SicoInacap/Views/Recintos/Create.cshtml~origin_fusion2
+/SicoInacap/Views/Recintos/Create.cshtml~HEAD
