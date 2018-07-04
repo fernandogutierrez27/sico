@@ -75,7 +75,7 @@ namespace SicoInacap.Models
                 .Property(e => e.Descripcion)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Evento>()
+            modelBuilder.Entity<Categoria>()
                 .Property(e => e.Icono)
                 .IsUnicode(false);
 

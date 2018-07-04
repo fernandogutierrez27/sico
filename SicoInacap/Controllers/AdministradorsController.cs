@@ -10,107 +10,112 @@ using SicoInacap.Models;
 
 namespace SicoInacap.Controllers
 {
-    public class CategoriasController : Controller
+    public class AdministradorsController : Controller
     {
         private SicoModel db = new SicoModel();
 
-        // GET: Categorias
+        // GET: Administradors
         public ActionResult Index()
         {
-            return View(db.Categoria.ToList());
+            var administrador = db.Administrador.Include(a => a.Usuario);
+            return View(administrador.ToList());
         }
 
-        // GET: Categorias/Details/5
-        public ActionResult Details(int? id)
+        // GET: Administradors/Details/5
+        public ActionResult Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Categoria categoria = db.Categoria.Find(id);
-            if (categoria == null)
+            Administrador administrador = db.Administrador.Find(id);
+            if (administrador == null)
             {
                 return HttpNotFound();
             }
-            return View(categoria);
+            return View(administrador);
         }
 
-        // GET: Categorias/Create
+        // GET: Administradors/Create
         public ActionResult Create()
         {
+            ViewBag.Username = new SelectList(db.Usuario, "Username", "Password");
             return View();
         }
 
-        // POST: Categorias/Create
+        // POST: Administradors/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Codigo,Nombre,Icono")] Categoria categoria)
+        public ActionResult Create([Bind(Include = "Username")] Administrador administrador)
         {
             if (ModelState.IsValid)
             {
-                db.Categoria.Add(categoria);
+                db.Administrador.Add(administrador);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(categoria);
+            ViewBag.Username = new SelectList(db.Usuario, "Username", "Password", administrador.Username);
+            return View(administrador);
         }
 
-        // GET: Categorias/Edit/5
-        public ActionResult Edit(int? id)
+        // GET: Administradors/Edit/5
+        public ActionResult Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Categoria categoria = db.Categoria.Find(id);
-            if (categoria == null)
+            Administrador administrador = db.Administrador.Find(id);
+            if (administrador == null)
             {
                 return HttpNotFound();
             }
-            return View(categoria);
+            ViewBag.Username = new SelectList(db.Usuario, "Username", "Password", administrador.Username);
+            return View(administrador);
         }
 
-        // POST: Categorias/Edit/5
+        // POST: Administradors/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Codigo,Nombre,Icono")] Categoria categoria)
+        public ActionResult Edit([Bind(Include = "Username")] Administrador administrador)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(categoria).State = EntityState.Modified;
+                db.Entry(administrador).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(categoria);
+            ViewBag.Username = new SelectList(db.Usuario, "Username", "Password", administrador.Username);
+            return View(administrador);
         }
 
-        // GET: Categorias/Delete/5
-        public ActionResult Delete(int? id)
+        // GET: Administradors/Delete/5
+        public ActionResult Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Categoria categoria = db.Categoria.Find(id);
-            if (categoria == null)
+            Administrador administrador = db.Administrador.Find(id);
+            if (administrador == null)
             {
                 return HttpNotFound();
             }
-            return View(categoria);
+            return View(administrador);
         }
 
-        // POST: Categorias/Delete/5
+        // POST: Administradors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(string id)
         {
-            Categoria categoria = db.Categoria.Find(id);
-            db.Categoria.Remove(categoria);
+            Administrador administrador = db.Administrador.Find(id);
+            db.Administrador.Remove(administrador);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
