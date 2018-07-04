@@ -1,12 +1,11 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
-    
-   @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
@@ -26,10 +25,10 @@
                         @Html.ActionLink("Gestion de Usuarios", "Index", "Usuario", null, new { @class = "nav-link" })
                     </li>
                     <li class="nav-item ">
-                        @Html.ActionLink("Gestion de Agenda", "Index", "Agenda", null, new { @class = "nav-link" })
+                        @Html.ActionLink("Gestion de Agenda", "Calendario", "Agenda", null, new { @class = "nav-link" })
                     </li>
                     <li class="nav-item ">
-                        @Html.ActionLink("Gestion de Eventos", "Index", "Eventos", null, new { @class = "nav-link" })
+                        @Html.ActionLink("Gestion de Eventos", "Index", "evento", null, new { @class = "nav-link" })
                     </li>
                     <li class="nav-item ">
                         @Html.ActionLink("Gestion de Recintos", "Index", "Recintos", null, new { @class = "nav-link" })
@@ -48,13 +47,9 @@
         </footer>
     </div>
 
-    
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8-xszb_U0t3DlkGRnWFp3vigBKbML7XE&callback=inicializacion" async defer>
 
     </script>
-
-
-
 
     <script>
         $('#myModal').on('shown.bs.modal', function () {
