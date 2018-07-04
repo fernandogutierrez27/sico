@@ -1,0 +1,295 @@
+﻿@model SicoInacap.Models.Agenda
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+<div id="messageModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="alert">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Error</h3>
+            </div>
+            <div class="modal-body">
+                <div id="pMessage" class="alert alert-danger" role="alert"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="form">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Programar Evento</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="control-label col-md-3">Recinto</label>
+                    <div class="col-md-9">
+                        <input type="text" id="tbxRecinto" value="" class="form-control" disabled />
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label id="lbStartDate" class="control-label col-md-3"></label>
+                    <div class="col-md-9">
+                        <input type="text" id="fechaInicio" value="" class="form-control" disabled />
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label class="control-label col-md-3">Hora Inicial</label>
+                    <div class="col-md-9">
+                        <input type="text" id="horaInicio" value="" class="form-control" disabled />
+                    </div>
+                </div>
+                <div id="displayEndDate">
+                    <br />
+                    <div class="form-group">
+                        <label class="control-label col-md-3">Fecha Final</label>
+                        <div class="col-md-9">
+                            <input type="text" id="fechaFin" value="" class="form-control" disabled />
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label class="control-label col-md-3">Hora Final</label>
+                    <div class="col-md-9">
+                        <input type="text" id="horaFin" value="" class="form-control" disabled />
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CodigoEvento, "Evento", htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.DropDownList("CodigoEvento", null, htmlAttributes: new { @class = "form-control", @id = "idEvento" })
+                        @Html.ValidationMessageFor(model => model.CodigoEvento, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="programarEvento()">Aceptar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Agenda</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.Label("FechaActual", "Fecha", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Label("FechaActual", DateTime.Now.ToShortDateString(), htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.CodigoRecinto, "Recinto", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CodigoRecinto", null, htmlAttributes: new { @class = "form-control", @onchange = "CambiarRecinto(this.value)", @id = "idRecinto" })
+                @Html.ValidationMessageFor(model => model.CodigoRecinto, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<div id="wrapper">
+    <div id="myScheduler"></div>
+    <div id='calendar'></div>
+</div>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.print.css" rel="stylesheet" media="print" />
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/locale/es.js"></script>
+    <script>
+
+        function CambiarRecinto(recinto) {
+            var events = [];
+
+            $.ajax({
+                type: 'GET',
+                url: '/Agenda/GetAgenda?recintoId=' + recinto,
+                success: function (data) {
+                    $.each(data, function (i, v) {
+                        events.push({
+                            constraint: v.id,
+                            title: v.title,
+                            description: v.description,
+                            start: moment(v.start),
+                            end: moment(v.end),
+                            color: v.color
+                        });
+                    });
+                    GenerarCalendario(events);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+
+        }
+
+        function GenerarCalendario(events) {
+            $('#calendar').fullCalendar('destroy');
+            $('#calendar').fullCalendar({
+                defaultView: 'semana',
+                //validRange: {
+                //    start: new Date()
+                //},
+                slotDuration: '01:00:00',
+                contentHeight: 400,
+                defaultDate: new Date(),
+                header: {
+                    left: 'prev',
+                    center: 'title',
+                    right: 'next'
+                },
+                allDaySlot: false,
+                views: {
+                    semana: {
+                        type: 'agenda',
+                        duration: { days: 7 },
+                        buttonText: 'Semana'
+                    }
+                },
+                eventLimit: true,
+                eventColor: '',
+                events: events,
+                eventClick: function (calEvent, jsEvent, view) {
+                    let id = calEvent.constraint;
+                    let title = calEvent.title;
+                    let description = calEvent.description;
+                    let start = calEvent.start;
+                    let end = calEvent.end;
+                    let color = calEvent.colo;
+                },
+                selectable: true,
+                select: function (startDate, endDate) {
+
+                    let now = new Date();
+                    let start = new Date(startDate.format());
+                    let end = new Date(endDate.format());
+                    if (start > now) {
+                        let evento = $('#idEvento').val();
+                        if (evento != null) {
+                            let displayStartDate = start.getDate() + " de " + getMonth(start.getMonth()) + " del " + start.getFullYear();
+                            let displayEndDate = end.getDate() + " de " + getMonth(end.getMonth()) + " del " + end.getFullYear();
+                            let displayStartHour = start.getHours() > 9 ? start.getHours() + ":00" : "0" + start.getHours() + ":00";
+                            let displayEndtHour = end.getHours() > 9 ? end.getHours() + ":00" : "0" + end.getHours() + ":00";
+
+                            $('#tbxRecinto').val($('#idRecinto option:selected').text());
+                            $('#fechaInicio').val(displayStartDate);
+                            $('#fechaInicio').attr('name', start.toString());
+                            $('#horaInicio').val(displayStartHour);
+                            $('#fechaFin').val(displayEndDate);
+                            $('#fechaFin').attr('name', end.toString());
+                            $('#horaFin').val(displayEndtHour);
+                            if (start.getFullYear() == end.getFullYear() && start.getMonth() == end.getMonth() && start.getDate() == end.getDate()) {
+                                $('#lbStartDate').html("Fecha");
+                                $('#displayEndDate').hide();
+                            } else {
+                                $('#lbStartDate').html("Fecha Inicial");
+                                $('#displayEndDate').show();
+                            }
+
+                            $('#myModal').modal('show');
+                        } else {
+                            showErrorMessage('No existen eventos disponibles para agendar.', 5);
+                        }
+                    } else {
+                        showErrorMessage('Por favor seleccione una fecha y hora de inicio mayor que la actual.', 5);
+                    }
+
+                }
+            });
+        }
+
+        function showErrorMessage(message, seconds) {
+            $('#pMessage').html('<b>' + message + '</b>');
+            $('#messageModal').modal('show');
+            setTimeout(() => {
+                $('#pMessage').html('');
+                $('#messageModal').modal('hide');
+            }, (seconds * 1000));
+        }
+
+        function programarEvento() {
+
+            let start = new Date($('#fechaInicio').attr('name'));
+            let end = new Date($('#fechaFin').attr('name'));
+
+            let recinto = $('#idRecinto').val();
+            let fechaInicio = start.getDate() + '-' + (start.getMonth() + 1) + '-' + start.getFullYear() + ' ' + $('#horaInicio').val();
+            let fechaFin = end.getDate() + '-' + (end.getMonth() + 1) + '-' + end.getFullYear() + ' ' + $('#horaFin').val();
+            let evento = $('#idEvento').val();
+
+            $.ajax({
+                type: 'POST',
+                url: '/Agenda/SaveAgenda',
+                data: {
+                    CodigoEvento: evento,
+                    CodigoRecinto: recinto,
+                    HoraInicio: fechaInicio,
+                    HoraTermino: fechaFin
+                },
+                success: function (recintoId) {
+                    window.location.assign('/Agenda/Calendario/?recintoId=' + recintoId);
+                },
+                error: function (error) {
+                    alert(error);
+                }
+            });
+
+        }
+
+        function sumarDias(fecha, dias) {
+            fecha.setDate(fecha.getDate() + dias);
+            return fecha;
+        }
+
+        function getMonth(id) {
+            switch (id) {
+                case 0: return "Enero";
+                case 1: return "Febrero";
+                case 2: return "Marzo";
+                case 3: return "Abril";
+                case 4: return "Mayo";
+                case 5: return "Junio";
+                case 6: return "Julio";
+                case 7: return "Agosto";
+                case 8: return "Septiembre";
+                case 9: return "Octubre";
+                case 10: return "Noviembre";
+                case 11: return "Diciembre";
+                default: return "NULL";
+            }
+        }
+
+        $(document).ready(function () {
+            let recintoId = $('#idRecinto').val();
+            CambiarRecinto(recintoId);
+        });
+    </script>
+}
