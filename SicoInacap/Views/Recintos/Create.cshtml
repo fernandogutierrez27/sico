@@ -1,208 +1,64 @@
 ﻿@model SicoInacap.Models.Recinto
 
 @{
-    ViewBag.Title = "Crear Recinto";
+    ViewBag.Title = "Create";
 }
 
-<nav aria-label="breadcrumb" class="mt-2">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">@Html.ActionLink("Gestion de Recintos", "Index", "Recintos")</li>
-        <li class="breadcrumb-item active">Crear Recinto</li>
-    </ol>
-</nav>
+<h2>Create</h2>
 
-<span class="badge badge-pill badge-success mb-2">
-    @Html.ActionLink("Regresar", "Index", null, new { @class = "nav-link text-light" })
-</span>
-@using (Html.BeginForm())
+
+@using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Recinto</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Codigo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Codigo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Codigo, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
-<div class="form-horizontal">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Latitud, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Latitud, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Latitud, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(model => model.Codigo, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-12">
-            @Html.EditorFor(model => model.Codigo, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Codigo, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Longitud, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Longitud, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Longitud, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
         </div>
     </div>
-
-    <div class="form-group d-none">
-        @Html.LabelFor(model => model.Latitud, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Latitud, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Latitud, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group d-none">
-        @Html.LabelFor(model => model.Longitud, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Longitud, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Longitud, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-12">
-            @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" , placeholder = "Nombre del Recinto"} })
-            @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <p class="display-4 p-3 text-center" >Seleccione la Ubicación del Recinto</p>
-    <div id="map" style="height:400px" class="my-4 shadow p-3 mb-5 bg-white rounded"></div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-12">
-            <input type="submit" value="Crear" class="btn btn-primary btn-lg btn-block" />
-        </div>
-    </div>
-</div>
 }
 
-<div class="modal fade" id="marcador" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Creación de Recinto</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Debe Ingresar un Nombre de Recinto
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
+<div>
+    @Html.ActionLink("Back to List", "Index")
 </div>
-
-
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
-
-
-<script>
-    function inicializacion() {
-        //Creo un nuevo mapa situado en Inacap, Antofagasta
-        var mapa = new google.maps.Map(document.getElementById("map"), {
-            center: new google.maps.LatLng(-23.560014050233416, -70.40047645568848),
-            zoom: 17,
-            mapTypeId: google.maps.MapTypeId.ROADMAP,
-            styles: [
-                { elementType: 'geometry', stylers: [{ color: '#242f3e' }] },
-                { elementType: 'labels.text.stroke', stylers: [{ color: '#242f3e' }] },
-                { elementType: 'labels.text.fill', stylers: [{ color: '#746855' }] },
-                {
-                    featureType: 'administrative.locality',
-                    elementType: 'labels.text.fill',
-                    stylers: [{ color: '#d59563' }]
-                },
-                {
-                    featureType: 'poi',
-                    elementType: 'labels.text.fill',
-                    stylers: [{ color: '#d59563' }]
-                },
-                {
-                    featureType: 'poi.park',
-                    elementType: 'geometry',
-                    stylers: [{ color: '#263c3f' }]
-                },
-                {
-                    featureType: 'poi.park',
-                    elementType: 'labels.text.fill',
-                    stylers: [{ color: '#6b9a76' }]
-                },
-                {
-                    featureType: 'road',
-                    elementType: 'geometry',
-                    stylers: [{ color: '#38414e' }]
-                },
-                {
-                    featureType: 'road',
-                    elementType: 'geometry.stroke',
-                    stylers: [{ color: '#212a37' }]
-                },
-                {
-                    featureType: 'road',
-                    elementType: 'labels.text.fill',
-                    stylers: [{ color: '#9ca5b3' }]
-                },
-                {
-                    featureType: 'road.highway',
-                    elementType: 'geometry',
-                    stylers: [{ color: '#746855' }]
-                },
-                {
-                    featureType: 'road.highway',
-                    elementType: 'geometry.stroke',
-                    stylers: [{ color: '#1f2835' }]
-                },
-                {
-                    featureType: 'road.highway',
-                    elementType: 'labels.text.fill',
-                    stylers: [{ color: '#f3d19c' }]
-                },
-                {
-                    featureType: 'transit',
-                    elementType: 'geometry',
-                    stylers: [{ color: '#2f3948' }]
-                },
-                {
-                    featureType: 'transit.station',
-                    elementType: 'labels.text.fill',
-                    stylers: [{ color: '#d59563' }]
-                },
-                {
-                    featureType: 'water',
-                    elementType: 'geometry',
-                    stylers: [{ color: '#17263c' }]
-                },
-                {
-                    featureType: 'water',
-                    elementType: 'labels.text.fill',
-                    stylers: [{ color: '#515c6d' }]
-                },
-                {
-                    featureType: 'water',
-                    elementType: 'labels.text.stroke',
-                    stylers: [{ color: '#17263c' }]
-                }
-            ]
-        });
-        //Creo un evento asociado a "mapa" cuando se hace "click" sobre el
-        google.maps.event.addListener(mapa, "click", function (evento) {
-            //Obtengo las coordenadas separadas
-            var latitud = evento.latLng.lat();
-            var longitud = evento.latLng.lng();
-            //Puedo unirlas en una unica variable si asi lo prefiero
-            var coordenadas = evento.latLng.lat() + ", " + evento.latLng.lng();
-            //Asignar variables a lso input
-            var inputLatitud = document.getElementById("Latitud");
-            inputLatitud.value = latitud;
-            var inputLongitud = document.getElementById("Longitud");
-            inputLongitud.value = longitud;
-            //Creo un marcador utilizando las coordenadas obtenidas y almacenadas por separado en "latitud" y "longitud"
-            var coordenadas = new google.maps.LatLng(latitud, longitud);
-            /* Debo crear un punto geografico utilizando google.maps.LatLng */
-            var inputNombre = document.getElementById("Nombre").value;
-
-            if (inputNombre = null || inputNombre == "") {
-                $('#marcador').modal('show');
-            } else {
-                var inputNombre = document.getElementById("Nombre").value;
-                var marcador = new google.maps.Marker({ position: coordenadas, map: mapa, animation: google.maps.Animation.DROP, title: inputNombre });
-            }
-
-            
-        });
-        //Fin del evento
-    }
-
-</script>

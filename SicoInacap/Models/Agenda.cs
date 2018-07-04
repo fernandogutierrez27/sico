@@ -15,8 +15,8 @@ namespace SicoInacap.Models
         }
 
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int Codigo { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int? Codigo { get; set; }
 
         public int CodigoEvento { get; set; }
 
