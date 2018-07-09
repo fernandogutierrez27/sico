@@ -22,13 +22,13 @@
                         @Html.ActionLink("Inicio", "Index", "Home", null, new { @class = "nav-link" })
                     </li>
                     <li class="nav-item ">
-                        @Html.ActionLink("Gestion de Usuarios", "Index", "Usuario", null, new { @class = "nav-link" })
+                        @Html.ActionLink("Gestion de Usuarios", "Index", "Usuarios", null, new { @class = "nav-link" })
                     </li>
                     <li class="nav-item ">
                         @Html.ActionLink("Gestion de Agenda", "Index", "Agenda", null, new { @class = "nav-link" })
                     </li>
                     <li class="nav-item ">
-                        @Html.ActionLink("Gestion de Eventos", "Index", "Eventos", null, new { @class = "nav-link" })
+                        @Html.ActionLink("Gestion de Eventos", "Index", "Evento", null, new { @class = "nav-link" })
                     </li>
                     <li class="nav-item ">
                         @Html.ActionLink("Gestion de Recintos", "Index", "Recintos", null, new { @class = "nav-link" })
@@ -46,7 +46,15 @@
             <p>&copy; @DateTime.Now.Year - Sico Web</p>
         </footer>
     </div>
-
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <!--
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+        
+    
+        -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8-xszb_U0t3DlkGRnWFp3vigBKbML7XE&callback=inicializacion" async defer>
 
     </script>
@@ -56,11 +64,6 @@
             $('#myInput').trigger('focus')
         })
     </script>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 </body>
 </html>
