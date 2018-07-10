@@ -48,6 +48,15 @@ namespace SicoInacap.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult RemoverAdmin(string usuarioId)
+        {
+            Administrador admin = db.Administrador.Find(usuarioId);
+            if (admin == null) return RedirectToAction("Index");
+            db.Administrador.Remove(admin);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
         // GET: Usuarios/Create
         public ActionResult Create()
         {
