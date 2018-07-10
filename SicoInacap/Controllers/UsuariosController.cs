@@ -36,6 +36,18 @@ namespace SicoInacap.Controllers
             return View(usuario);
         }
 
+        public ActionResult PromoverAdmin(string usuarioId)
+        {
+            Administrador admin = db.Administrador.Find(usuarioId);
+            if (admin != null) return RedirectToAction("Index");
+            db.Administrador.Add(new Administrador
+            {
+                Username = usuarioId
+            });
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
         // GET: Usuarios/Create
         public ActionResult Create()
         {
