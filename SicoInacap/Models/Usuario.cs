@@ -18,6 +18,7 @@ namespace SicoInacap.Models
 
         [Key]
         [StringLength(50)]
+        [Required]
         public string Username { get; set; }
 
         public DateTime FechaInscripcion { get; set; }
