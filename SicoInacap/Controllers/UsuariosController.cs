@@ -50,15 +50,21 @@ namespace SicoInacap.Controllers
 
         public ActionResult ConvertirMiembro(string usuarioId)
         {
-            Usuario usuario = db.Usuario.Find(usuarioId);
-            ViewBag.Cargo = new SelectList(db.Cargo, "Codigo", "Nombre");
+            Miembro miembro = db.Miembro.Find(usuarioId);
+            if (miembro != null) RedirectToAction("Index");
+            miembro = new Miembro
+            {
+                Username = usuarioId,
+                FechaIngreso = DateTime.Today
+            };
+            ViewBag.CodigoCargo = new SelectList(db.Cargo, "Codigo", "Nombre");
 
-            return View(usuario);
+            return View(miembro);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ConvertirMiembro([Bind(Include = "Username,CargoId,Run,FechaIngreso,Fono")] Miembro miembro)
+        public ActionResult ConvertirMiembro([Bind(Include = "Username,CodigoCargo,Run,FechaIngreso,Fono")] Miembro miembro)
         {
             if (ModelState.IsValid)
             {
@@ -70,6 +76,17 @@ namespace SicoInacap.Controllers
             ViewBag.Cargo = new SelectList(db.Cargo, "Codigo", "Nombre");
             
             return View(miembro);
+        }
+
+        public ActionResult ConvertirSimpatizante(string usuarioId)
+        {
+            Miembro miembro = db.Miembro.Find(usuarioId);
+            if (miembro == null) RedirectToAction("Index");
+
+            db.Miembro.Remove(miembro);
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
         // GET: Usuarios/Create

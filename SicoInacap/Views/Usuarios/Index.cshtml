@@ -55,12 +55,12 @@
         <td>
             @if (item.Miembro == null)
             {
-                @Html.ActionLink("Convertir en Miembro", "ConvertirMiembro", new { id = item.Username })
+                @Html.ActionLink("Convertir en Miembro", "ConvertirMiembro", new { usuarioId = item.Username })
 
             }
             else
             {
-                @Html.ActionLink("Convertir en Simpatizante", "ConvertirSimpatizante", new { id = item.Username })
+                @Html.ActionLink("Convertir en Simpatizante", "ConvertirSimpatizante", new { usuarioId = item.Username })
             }
             |
             @if (item.Administrador == null)
