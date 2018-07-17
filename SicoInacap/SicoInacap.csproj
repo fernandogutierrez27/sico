@@ -143,6 +143,7 @@
     </Compile>
     <Compile Include="Models\Administrador.cs" />
     <Compile Include="Models\Agenda.cs" />
+    <Compile Include="Models\AgendaBloque.cs" />
     <Compile Include="Models\Bloque.cs" />
     <Compile Include="Models\Cargo.cs" />
     <Compile Include="Models\Categoria.cs" />
