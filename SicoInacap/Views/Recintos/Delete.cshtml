@@ -38,7 +38,14 @@
     </tbody>
 </table>
 
-<div id="map" style="height:400px" class="my-4 shadow p-3 mb-5 bg-white rounded"></div>
+<div class="card">
+    <div class="card-header card-header-primary text-center">
+        <h4 class="card-title">Ubicación del Recinto a Eliminar</h4>
+    </div>
+    <div class="card-body table-responsive">
+        <div id="map" style="height:400px" class="my-4 shadow p-3 mb-5 bg-white rounded"></div>
+    </div>
+</div>
 
 <div class="form-actions no-color">
     <input type="button" value="Borrar" class="btn btn-danger btn-lg btn-block" data-toggle="modal" data-target="#exampleModalCenter" />
@@ -65,7 +72,7 @@
                     @Html.AntiForgeryToken()
 
                     <div class="form-actions no-color">
-                        <input type="submit" value="Aceptar" class="btn btn-primary" />
+                        <input type="submit" value="Aceptar" class="btn btn-success" />
                     </div>
                 }
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
