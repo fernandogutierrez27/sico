@@ -107,7 +107,7 @@ namespace SicoInacap.Controllers
         }
 
         // GET: evento/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? id, bool? error = false)
         {
             if (id == null)
             {
@@ -118,6 +118,7 @@ namespace SicoInacap.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.error = error;
             return View(evento);
         }
 
@@ -126,10 +127,17 @@ namespace SicoInacap.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Evento evento = db.Evento.Find(id);
-            db.Evento.Remove(evento);
-            db.SaveChanges();
+            try {
+                Evento evento = db.Evento.Find(id);
+                db.Evento.Remove(evento);
+                db.SaveChanges();
+            }
+            catch (Exception e) {
+                
+                return RedirectToAction("Delete", new { id = id, error = true });
+            }
             return RedirectToAction("Index");
+           
         }
 
         protected override void Dispose(bool disposing)
