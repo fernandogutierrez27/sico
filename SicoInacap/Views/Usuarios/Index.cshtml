@@ -15,11 +15,11 @@
             @Html.DisplayNameFor(model => model.Username)
         </th>
         @*<th>
-            @Html.DisplayNameFor(model => model.Miembro.Fono)
-        </th>*@
+                @Html.DisplayNameFor(model => model.Miembro.Fono)
+            </th>*@
         @*<th>
-            @Html.DisplayNameFor(model => model.Simpatizante.Apellidos)
-        </th>*@
+                @Html.DisplayNameFor(model => model.Simpatizante.Apellidos)
+            </th>*@
         <th>
             @Html.DisplayNameFor(model => model.FechaInscripcion)
         </th>
@@ -31,60 +31,76 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Username)
-        </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.Miembro.Fono)
-        </td>*@
-        @*<td>
-            @Html.DisplayFor(modelItem => item.Simpatizante.Apellidos)
-        </td>*@
-        <td>
-            @Html.DisplayFor(modelItem => item.FechaInscripcion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Password)
-        </td>
-        <td>@(item.Miembro == null ? "Simpatizante" : "Miembro")</td>
-        <td class="text-center">
-            @(item.Administrador == null ? "No" : "Sí")
-        </td>
-        <td>
-            @if (item.Miembro == null)
-            {
-                @Html.ActionLink("Convertir en Miembro", "ConvertirMiembro", new { id = item.Username })
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.Miembro.Fono)
+                </td>*@
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.Simpatizante.Apellidos)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaInscripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Password)
+            </td>
+            <td>@(item.Miembro == null ? "Simpatizante" : "Miembro")</td>
+            <td class="text-center">
+                @(item.Administrador == null ? "No" : "Sí")
+            </td>
+            <td>
+                @if (item.Miembro == null)
+                {
+                    @Html.ActionLink("Convertir en Miembro", "ConvertirMiembro", new { id = item.Username })
 
-            }
-            else
-            {
-                @Html.ActionLink("Convertir en Simpatizante", "ConvertirSimpatizante", new { id = item.Username })
-            }
-            |
-            @if (item.Administrador == null)
-            {
-                @Html.ActionLink("Promover a Administrador", "PromoverAdmin", new { usuarioId = item.Username })
+                }
+                else
+                {
+                    @Html.ActionLink("Convertir en Simpatizante", "ConvertirSimpatizante", new { id = item.Username })
+                }
+                |
+                @if (item.Administrador == null)
+                {
+                    @Html.ActionLink("Promover a Administrador", "PromoverAdmin", new { usuarioId = item.Username })
 
-            }
-            else
-            {
-                @Html.ActionLink("Remover Administrador", "RemoverAdmin", new { usuarioId = item.Username })
-            }
-             | 
-            @Html.ActionLink("Edit", "Edit", new { id = item.Username }) |
-            @Html.ActionLink("Details", "Details", new { id = item.Username }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Username })
-        </td>
-    </tr>
-}
+                }
+                else
+                {
+                    @Html.ActionLink("Remover Administrador", "RemoverAdmin", new { usuarioId = item.Username })
+                }
+                |
+                @Html.ActionLink("Edit", "Edit", new { id = item.Username }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Username }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Username })
+            </td>
+        </tr>
+    }
 
 </table>
-
+<aside class="bgModalVentana">
+    <div class="modalVentana"></div>
+</aside>
 <script>
     @if(ViewBag.promovido)
     {
-        @:alert("Administrador promovido con éxito");
+        @:swal(
+    @:'Éxito!',
+    @:'El usuario fue promovido a Administrador',
+    @:'success'
+    @:)
+    }
+
+    @if(ViewBag.noeliminado)
+    {
+        @:swal(
+    @:'Advertencia!',
+    @:'El usuario fue promovido a AdministradorEste administrador no puede ser removido, ya que tiene un evento asignado. Por favor contactar con el administrador',
+    @:'warning'
+    @:)
     }
 </script>
