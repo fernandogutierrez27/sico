@@ -12,7 +12,7 @@ namespace SicoInacap.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Bloque()
         {
-            AgendaBloque = new HashSet<AgendaBloque>();
+            Agenda = new HashSet<Agenda>();
         }
 
         [Key]
@@ -24,7 +24,6 @@ namespace SicoInacap.Models
         public TimeSpan HoraTermino { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AgendaBloque> AgendaBloque { get; set; }
-
+        public virtual ICollection<Agenda> Agenda { get; set; }
     }
 }

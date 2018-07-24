@@ -15,11 +15,9 @@ namespace SicoInacap.Controllers
         private SicoModel db = new SicoModel();
 
         // GET: Usuarios
-        public ActionResult Index(bool? AdminPromovido = false, bool NoEliminado = false)
+        public ActionResult Index()
         {
             var usuario = db.Usuario.Include(u => u.Administrador).Include(u => u.Miembro).Include(u => u.Simpatizante);
-            ViewBag.promovido = AdminPromovido;
-            ViewBag.noeliminado = NoEliminado;
             return View(usuario.ToList());
         }
 
@@ -36,75 +34,6 @@ namespace SicoInacap.Controllers
                 return HttpNotFound();
             }
             return View(usuario);
-        }
-
-        public ActionResult PromoverAdmin(string usuarioId)
-        {
-            Administrador admin = db.Administrador.Find(usuarioId);
-            if (admin != null) return RedirectToAction("Index");
-            db.Administrador.Add(new Administrador
-            {
-                Username = usuarioId
-
-            });
-            db.SaveChanges();
-            return RedirectToAction("Index", new { AdminPromovido = true });
-        }
-
-        public ActionResult RemoverAdmin(string usuarioId)
-        {
-            Administrador admin = db.Administrador.Find(usuarioId);
-            if (admin == null) return RedirectToAction("Index");
-            db.Administrador.Remove(admin);
-            try
-            {
-                db.SaveChanges();
-            }catch(Exception e)
-            {
-
-            }
-            return RedirectToAction("Index", new { NoEliminado = true});
-        }
-
-        public ActionResult ConvertirMiembro(string usuarioId)
-        {
-            Miembro miembro = db.Miembro.Find(usuarioId);
-            if (miembro != null) RedirectToAction("Index");
-            miembro = new Miembro
-            {
-                Username = usuarioId,
-                FechaIngreso = DateTime.Today
-            };
-            ViewBag.CodigoCargo = new SelectList(db.Cargo, "Codigo", "Nombre");
-
-            return View(miembro);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult ConvertirMiembro([Bind(Include = "Username,CodigoCargo,Run,FechaIngreso,Fono")] Miembro miembro)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Miembro.Add(miembro);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.Cargo = new SelectList(db.Cargo, "Codigo", "Nombre");
-            
-            return View(miembro);
-        }
-
-        public ActionResult ConvertirSimpatizante(string usuarioId)
-        {
-            Miembro miembro = db.Miembro.Find(usuarioId);
-            if (miembro == null) RedirectToAction("Index");
-
-            db.Miembro.Remove(miembro);
-            db.SaveChanges();
-
-            return RedirectToAction("Index");
         }
 
         // GET: Usuarios/Create

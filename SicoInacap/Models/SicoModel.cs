@@ -15,7 +15,6 @@ namespace SicoInacap.Models
         public virtual DbSet<Administrador> Administrador { get; set; }
         public virtual DbSet<Agenda> Agenda { get; set; }
         public virtual DbSet<Bloque> Bloque { get; set; }
-        public virtual DbSet<AgendaBloque> AgendaBloque { get; set; }
         public virtual DbSet<Cargo> Cargo { get; set; }
         public virtual DbSet<Categoria> Categoria { get; set; }
         public virtual DbSet<EstadoEvento> EstadoEvento { get; set; }
@@ -37,21 +36,10 @@ namespace SicoInacap.Models
                 .HasForeignKey(e => e.UsernameOrganizador)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<AgendaBloque>()
-                .Map(m => m.ToTable("AgendaBloque"));
-
-            modelBuilder.Entity<AgendaBloque>()
-                .HasRequired(e => e.Agenda)
-                .WithMany(e => e.AgendaBloque)
-                .HasForeignKey(e => e.CodigoAgenda)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<AgendaBloque>()
-                .HasRequired(e => e.Bloque)
-                .WithMany(e => e.AgendaBloque)
-                .HasForeignKey(e => e.CodigoBloque)
-                .WillCascadeOnDelete(false);
-
+            modelBuilder.Entity<Agenda>()
+                .HasMany(e => e.Bloque)
+                .WithMany(e => e.Agenda)
+                .Map(m => m.ToTable("AgendaBloque").MapLeftKey("CodigoAgenda").MapRightKey("CodigoBloque"));
 
             modelBuilder.Entity<Cargo>()
                 .Property(e => e.Nombre)
