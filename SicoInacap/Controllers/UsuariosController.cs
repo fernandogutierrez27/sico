@@ -66,6 +66,47 @@ namespace SicoInacap.Controllers
             return RedirectToAction("Index", new { NoEliminado = true});
         }
 
+        public ActionResult ConvertirMiembro(string usuarioId)
+        {
+            Miembro miembro = db.Miembro.Find(usuarioId);
+            if (miembro != null) RedirectToAction("Index");
+            miembro = new Miembro
+            {
+                Username = usuarioId,
+                FechaIngreso = DateTime.Today
+            };
+            ViewBag.CodigoCargo = new SelectList(db.Cargo, "Codigo", "Nombre");
+
+            return View(miembro);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ConvertirMiembro([Bind(Include = "Username,CodigoCargo,Run,FechaIngreso,Fono")] Miembro miembro)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Miembro.Add(miembro);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.Cargo = new SelectList(db.Cargo, "Codigo", "Nombre");
+            
+            return View(miembro);
+        }
+
+        public ActionResult ConvertirSimpatizante(string usuarioId)
+        {
+            Miembro miembro = db.Miembro.Find(usuarioId);
+            if (miembro == null) RedirectToAction("Index");
+
+            db.Miembro.Remove(miembro);
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
         // GET: Usuarios/Create
         public ActionResult Create()
         {
