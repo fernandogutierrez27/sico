@@ -14,4 +14,29 @@
 
 
 /*///////////////////////////////////////////AQUI ESTUBO BRIAN :D//////////////////////////////////////////////*/
-
+.tituloGestion {
+    padding: 20px 0;
+}
+.btnCrear a {
+    padding: 10px;
+    background-color: #122a79;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+}
+.tabla tr th{
+    background-color: #0094ff;
+    color:white;
+    text-align:center;
+    vertical-align:middle;
+}
+.tabla tr td:last-child {
+    text-align: left;
+}
+    .tabla tr td {
+    text-align: center;
+    vertical-align: middle;
+}
+.tabla tr:nth-child(2n) + tr {
+    background-color: rgba(220,220,220,1);
+}

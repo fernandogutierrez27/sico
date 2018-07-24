@@ -4,12 +4,12 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2 class="tituloGestion">Gestion de Usuarios</h2>
 
-<p>
+<p class="btnCrear">
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+<table class="table tabla">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Username)
@@ -88,8 +88,17 @@
     @if(ViewBag.promovido)
     {
         @:swal(
-    @:'Éxito!',
+    @:'Enhorabuena!',
     @:'El usuario fue promovido a Administrador',
+    @:'success'
+    @:)
+    }
+
+    @if(ViewBag.eliminado)
+    {
+        @:swal(
+    @:'Éxito!',
+    @:'El Administrador fue promovido a Usuario',
     @:'success'
     @:)
     }
