@@ -6,14 +6,76 @@
 
 <h2>Create</h2>
 
-<div id="messageModal" class="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="alert">
+<div id="reagendarModel" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 75%" role="form">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Error</h3>
+                <h3 id="lbEventoReprogramado" class="modal-title"></h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
-                <div id="pMessage" class="alert alert-danger" role="alert"></div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CodigoRecinto, "Recinto", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("NuevoCodigoRecinto", null, htmlAttributes: new { @class = "form-control", @onchange = "CambiarNuevoRecinto(this.value)", @id = "idNuevoRecinto" })
+                    </div>
+                </div>
+                <br />
+                <br />
+                <div id='reagendar'></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="reagendarEvento()">Aceptar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="eventoModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="form">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Evento</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="idReagendarEvento" />
+                <div class="form-group">
+                    <label class="control-label col-md-3">Título</label>
+                    <div class="col-md-9">
+                        <input type="text" id="tbxTitle" value="" class="form-control" disabled />
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label class="control-label col-md-3">Descripción</label>
+                    <div class="col-md-9">
+                        <textarea id="tbxDescription" value="" class="form-control" rows="2" disabled></textarea>
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label class="control-label col-md-3">Fecha Inicio</label>
+                    <div class="col-md-9">
+                        <input type="text" id="tbxStartDate" value="" class="form-control" disabled />
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label class="control-label col-md-3">Fecha Fin</label>
+                    <div class="col-md-9">
+                        <input type="text" id="tbxEndDate" value="" class="form-control" disabled />
+                    </div>
+                </div>
+                <br />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="programarReagendamiento()">Reagendar</button>
             </div>
         </div>
     </div>
@@ -23,7 +85,7 @@
     <div class="modal-dialog" role="form">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Programar Evento</h3>
+                <h3 id="lbTitle" class="modal-title"></h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -68,15 +130,31 @@
                 <br />
                 <div class="form-group">
                     @Html.LabelFor(model => model.CodigoEvento, "Evento", htmlAttributes: new { @class = "control-label col-md-3" })
-                    <div class="col-md-9">
+                    <div id="listaEvento" class="col-md-9">
                         @Html.DropDownList("CodigoEvento", null, htmlAttributes: new { @class = "form-control", @id = "idEvento" })
                         @Html.ValidationMessageFor(model => model.CodigoEvento, "", new { @class = "text-danger" })
+                    </div>
+                    <div id="textoEvento" class="col-md-9">
+                        <input type="text" id="tbxEvento" value="" class="form-control" disabled />
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" onclick="programarEvento()">Aceptar</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="messageModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="alert">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Error</h3>
+            </div>
+            <div class="modal-body">
+                <div id="pMessage" class="alert alert-danger" role="alert"></div>
             </div>
         </div>
     </div>
@@ -110,10 +188,7 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 
-<div id="wrapper">
-    <div id="myScheduler" style="height:400px"></div>
-    <div id='calendar' style="height:400px"></div>
-</div>
+<div id='calendar'></div>
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.print.css" rel="stylesheet" media="print" />
@@ -151,13 +226,105 @@
 
         }
 
+        function CambiarNuevoRecinto(recinto) {
+            var events = [];
+
+            $.ajax({
+                type: 'GET',
+                url: '/Agenda/GetAgenda?recintoId=' + recinto,
+                success: function (data) {
+
+                    let id = $('#idReagendarEvento').val();
+
+                    $.each(data, function (i, v) {
+                        if (v.id != id) {
+                            events.push({
+                                constraint: v.id,
+                                title: v.title,
+                                description: v.description,
+                                start: moment(v.start),
+                                end: moment(v.end),
+                                color: v.color
+                            });
+                        }
+                    });
+                    GenerarNuevoCalendario(events);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+
+        }
+
+        function GenerarNuevoCalendario(events) {
+            $('#reagendar').fullCalendar('destroy');
+            $('#reagendar').fullCalendar({
+                defaultView: 'semana',
+                slotDuration: '01:00:00',
+                contentHeight: 300,
+                defaultDate: new Date(),
+                header: {
+                    left: 'prev',
+                    center: 'title',
+                    right: 'next'
+                },
+                allDaySlot: false,
+                views: {
+                    semana: {
+                        type: 'agenda',
+                        duration: { days: 7 },
+                        buttonText: 'Semana'
+                    }
+                },
+                eventLimit: true,
+                eventColor: '',
+                events: events,
+                selectable: true,
+                select: function (startDate, endDate) {
+                    let evento = $('#idReagendarEvento').val();
+                    let recinto = $('#idNuevoRecinto option:selected').val();
+                    let now = new Date();
+                    let start = new Date(startDate.format());
+                    let end = new Date(endDate.format());
+                    if (start > now) {
+                        let displayStartDate = start.getDate() + " de " + getMonth(start.getMonth()) + " del " + start.getFullYear();
+                        let displayEndDate = end.getDate() + " de " + getMonth(end.getMonth()) + " del " + end.getFullYear();
+                        let displayStartHour = start.getHours() > 9 ? start.getHours() + ":00" : "0" + start.getHours() + ":00";
+                        let displayEndtHour = end.getHours() > 9 ? end.getHours() + ":00" : "0" + end.getHours() + ":00";
+                        
+                        document.getElementById('lbTitle').innerText = "Reprogramar Evento";
+                        $('#tbxEvento').val($('#tbxTitle').val());
+                        $('#listaEvento').hide();
+                        $('#textoEvento').show();
+
+                        $('#tbxRecinto').val($('#idNuevoRecinto option:selected').text());
+                        $('#fechaInicio').val(displayStartDate);
+                        $('#fechaInicio').attr('name', start.toString());
+                        $('#horaInicio').val(displayStartHour);
+                        $('#fechaFin').val(displayEndDate);
+                        $('#fechaFin').attr('name', end.toString());
+                        $('#horaFin').val(displayEndtHour);
+                        if (start.getFullYear() == end.getFullYear() && start.getMonth() == end.getMonth() && start.getDate() == end.getDate()) {
+                            $('#lbStartDate').html("Fecha");
+                            $('#displayEndDate').hide();
+                        } else {
+                            $('#lbStartDate').html("Fecha Inicial");
+                            $('#displayEndDate').show();
+                        }
+
+                        $('#myModal').modal('show');
+                    } else {
+                        showErrorMessage('Por favor seleccione una fecha y hora de inicio mayor que la actual.', 5);
+                    }
+                }
+            });
+        }
+
         function GenerarCalendario(events) {
             $('#calendar').fullCalendar('destroy');
             $('#calendar').fullCalendar({
                 defaultView: 'semana',
-                //validRange: {
-                //    start: new Date()
-                //},
                 slotDuration: '01:00:00',
                 contentHeight: 400,
                 defaultDate: new Date(),
@@ -178,12 +345,21 @@
                 eventColor: '',
                 events: events,
                 eventClick: function (calEvent, jsEvent, view) {
-                    let id = calEvent.constraint;
-                    let title = calEvent.title;
-                    let description = calEvent.description;
-                    let start = calEvent.start;
-                    let end = calEvent.end;
-                    let color = calEvent.colo;
+
+                    let start = new Date(calEvent.start.format());
+                    let end = new Date(calEvent.end.format());
+
+                    let displayStartDate = start.getDate() + " de " + getMonth(start.getMonth()) + " del " + start.getFullYear();
+                    let displayEndDate = end.getDate() + " de " + getMonth(end.getMonth()) + " del " + end.getFullYear();
+                    let displayStartHour = start.getHours() > 9 ? start.getHours() + ":00" : "0" + start.getHours() + ":00";
+                    let displayEndtHour = end.getHours() > 9 ? end.getHours() + ":00" : "0" + end.getHours() + ":00";
+
+                    $('#idReagendarEvento').val(calEvent.constraint);
+                    $('#tbxTitle').val(calEvent.title);
+                    $('#tbxDescription').val(calEvent.description);
+                    $('#tbxStartDate').val(displayStartDate + ' ' + displayStartHour);
+                    $('#tbxEndDate').val(displayEndDate + ' ' + displayEndtHour);
+                    $('#eventoModal').modal('show');
                 },
                 selectable: true,
                 select: function (startDate, endDate) {
@@ -199,6 +375,10 @@
                             let displayStartHour = start.getHours() > 9 ? start.getHours() + ":00" : "0" + start.getHours() + ":00";
                             let displayEndtHour = end.getHours() > 9 ? end.getHours() + ":00" : "0" + end.getHours() + ":00";
 
+                            document.getElementById('lbTitle').innerText = "Programar Evento";
+                            $('#textoEvento').hide();
+                            $('#listaEvento').show();
+
                             $('#tbxRecinto').val($('#idRecinto option:selected').text());
                             $('#fechaInicio').val(displayStartDate);
                             $('#fechaInicio').attr('name', start.toString());
@@ -213,7 +393,7 @@
                                 $('#lbStartDate').html("Fecha Inicial");
                                 $('#displayEndDate').show();
                             }
-
+                            $('#reagendarModel').modal('hide');
                             $('#myModal').modal('show');
                         } else {
                             showErrorMessage('No existen eventos disponibles para agendar.', 5);
@@ -235,6 +415,13 @@
             }, (seconds * 1000));
         }
 
+        function programarReagendamiento() {
+            $('#eventoModal').modal('hide');
+            $('#reagendarModel').modal('show');
+            document.getElementById('lbEventoReprogramado').innerText = 'Reprogramación de "' + $('#tbxTitle').val() + '"';
+            CambiarNuevoRecinto($('#idNuevoRecinto option:selected').val());
+        }
+
         function programarEvento() {
 
             let start = new Date($('#fechaInicio').attr('name'));
@@ -244,6 +431,10 @@
             let fechaInicio = start.getDate() + '-' + (start.getMonth() + 1) + '-' + start.getFullYear() + ' ' + $('#horaInicio').val();
             let fechaFin = end.getDate() + '-' + (end.getMonth() + 1) + '-' + end.getFullYear() + ' ' + $('#horaFin').val();
             let evento = $('#idEvento').val();
+            if (evento === null) {
+                evento = $('#idReagendarEvento').val();
+                recinto = $('#idNuevoRecinto option:selected').val();
+            }
 
             $.ajax({
                 type: 'POST',

@@ -42,7 +42,7 @@ namespace SicoInacap.Controllers
             ViewBag.UsernameOrganizador = new SelectList(db.Administrador, "Username", "Username");
             ViewBag.CodigoCategoria = new SelectList(db.Categoria, "Codigo", "Nombre");
             ViewBag.CodigoEstado = new SelectList(db.EstadoEvento, "Codigo", "Nombre");
-            ViewBag.UsernameResponsable = new SelectList(db.Miembro, "Username", "Fono");
+            ViewBag.UsernameResponsable = new SelectList(db.Simpatizante.Where(simpatizante => db.Miembro.Any(miembro => miembro.Username == simpatizante.Username)), "Username", "Nombres");
             return View();
         }
 
@@ -63,7 +63,7 @@ namespace SicoInacap.Controllers
             ViewBag.UsernameOrganizador = new SelectList(db.Administrador, "Username", "Username", evento.UsernameOrganizador);
             ViewBag.CodigoCategoria = new SelectList(db.Categoria, "Codigo", "Nombre", evento.CodigoCategoria);
             ViewBag.CodigoEstado = new SelectList(db.EstadoEvento, "Codigo", "Nombre", evento.CodigoEstado);
-            ViewBag.UsernameResponsable = new SelectList(db.Miembro, "Username", "Fono", evento.UsernameResponsable);
+            ViewBag.UsernameResponsable = new SelectList(db.Simpatizante.Where(simpatizante => db.Miembro.Any(miembro => miembro.Username == simpatizante.Username)), "Username", "Nombres", evento.UsernameResponsable);
             return View(evento);
         }
 
@@ -82,7 +82,7 @@ namespace SicoInacap.Controllers
             ViewBag.UsernameOrganizador = new SelectList(db.Administrador, "Username", "Username", evento.UsernameOrganizador);
             ViewBag.CodigoCategoria = new SelectList(db.Categoria, "Codigo", "Nombre", evento.CodigoCategoria);
             ViewBag.CodigoEstado = new SelectList(db.EstadoEvento, "Codigo", "Nombre", evento.CodigoEstado);
-            ViewBag.UsernameResponsable = new SelectList(db.Miembro, "Username", "Fono", evento.UsernameResponsable);
+            ViewBag.UsernameResponsable = new SelectList(db.Simpatizante.Where(simpatizante => db.Miembro.Any(miembro => miembro.Username == simpatizante.Username)), "Username", "Nombres", evento.UsernameResponsable);
             return View(evento);
         }
 
@@ -102,12 +102,12 @@ namespace SicoInacap.Controllers
             ViewBag.UsernameOrganizador = new SelectList(db.Administrador, "Username", "Username", evento.UsernameOrganizador);
             ViewBag.CodigoCategoria = new SelectList(db.Categoria, "Codigo", "Nombre", evento.CodigoCategoria);
             ViewBag.CodigoEstado = new SelectList(db.EstadoEvento, "Codigo", "Nombre", evento.CodigoEstado);
-            ViewBag.UsernameResponsable = new SelectList(db.Miembro, "Username", "Fono", evento.UsernameResponsable);
+            ViewBag.UsernameResponsable = new SelectList(db.Simpatizante.Where(simpatizante => db.Miembro.Any(miembro => miembro.Username == simpatizante.Username)), "Username", "Nombres", evento.UsernameResponsable);
             return View(evento);
         }
 
         // GET: evento/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? id, bool? error = false)
         {
             if (id == null)
             {
@@ -118,6 +118,7 @@ namespace SicoInacap.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.error = error;
             return View(evento);
         }
 
@@ -126,10 +127,17 @@ namespace SicoInacap.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Evento evento = db.Evento.Find(id);
-            db.Evento.Remove(evento);
-            db.SaveChanges();
+            try {
+                Evento evento = db.Evento.Find(id);
+                db.Evento.Remove(evento);
+                db.SaveChanges();
+            }
+            catch (Exception e) {
+                
+                return RedirectToAction("Delete", new { id = id, error = true });
+            }
             return RedirectToAction("Index");
+           
         }
 
         protected override void Dispose(bool disposing)
