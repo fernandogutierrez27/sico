@@ -24,6 +24,7 @@ namespace SicoInacap.Models
         public DateTime FechaInscripcion { get; set; }
 
         [Required]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
         public virtual Administrador Administrador { get; set; }
