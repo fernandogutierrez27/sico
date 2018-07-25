@@ -15,9 +15,11 @@ namespace SicoInacap.Controllers
         private SicoModel db = new SicoModel();
 
         // GET: Usuarios
-        public ActionResult Index(bool? AdminPromovido = false, bool NoEliminado = false)
+        public ActionResult Index(bool? AdminPromovido = false, bool? NoEliminado = false, bool? Eliminado = false)
         {
             var usuario = db.Usuario.Include(u => u.Administrador).Include(u => u.Miembro).Include(u => u.Simpatizante);
+
+            ViewBag.eliminado = Eliminado;
             ViewBag.promovido = AdminPromovido;
             ViewBag.noeliminado = NoEliminado;
             return View(usuario.ToList());
@@ -62,8 +64,10 @@ namespace SicoInacap.Controllers
             }catch(Exception e)
             {
 
+                return RedirectToAction("Index", new { NoEliminado = true });
             }
-            return RedirectToAction("Index", new { NoEliminado = true});
+
+            return RedirectToAction("Index", new { Eliminado = true });
         }
 
         public ActionResult ConvertirMiembro(string usuarioId)
