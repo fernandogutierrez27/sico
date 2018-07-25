@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SicoInacap.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,8 +9,14 @@ namespace SicoInacap.Controllers
 {
     public class HomeController : Controller
     {
+        private SicoModel db = new SicoModel();
+
         public ActionResult Index()
         {
+            ViewBag.Recintos = db.Recinto.ToList();
+            ViewBag.Agendas = db.Agenda.ToList();
+            ViewBag.Usuarios = db.Usuario.ToList();
+            ViewBag.Eventos = db.Evento.ToList();
             return View();
         }
 

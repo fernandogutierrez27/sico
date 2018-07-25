@@ -4,12 +4,17 @@
     {
         @Html.AntiForgeryToken()
 
-        <ul class="nav navbar-nav navbar-right">
-            <li>
-                @Html.ActionLink("Hola " + Session["nombreUsuario"] + "!", "Index", "Home")
-            </li>
-            <li><a href="javascript:document.getElementById('logoutForm').submit()">Cerrar sesión</a></li>
-        </ul>
+<ul class="nav navbar-nav navbar-right">
+    <li>
+        <span class="badge badge-pill badge-primary">
+            @Html.ActionLink("Hola " + Session["nombreUsuario"] + " !", "Index", "Home", null, new { @class = "nav-link text-light" })
+        </span>
+
+    </li>
+    
+    <li><a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-danger mx-3 btn-sm" role="button" aria-pressed="true">Cerrar sesión</a></li>
+</ul>
+        
     }
 }
 else

@@ -1,32 +1,382 @@
-﻿@{ 
+﻿@using SicoInacap.Models;
 
-        ViewBag.Title = "Home Page";
+
+
+@{
+
+    ViewBag.Title = "Dashboard";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
 
 <div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+
+    <div class="col-lg-4 col-md-12 col-sm-12">
+        <div class="card card-stats">
+            <div class="card-header card-header-warning card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">account_box</i>
+                </div>
+                <p class="card-category">Usuarios</p>
+                <h3 class="card-title">
+                    @ViewBag.Usuarios.Count
+                </h3>
+            </div>
+            <div class="card-footer">
+                <div class="stats">
+                    <i class="material-icons">update</i> Recién actualizado
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+
+    
+
+    <div class="col-lg-4 col-md-12 col-sm-12">
+        <div class="card card-stats">
+            <div class="card-header card-header-danger card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">star</i>
+                </div>
+                <p class="card-category">Eventos</p>
+                <h3 class="card-title">@ViewBag.Eventos.Count</h3>
+            </div>
+            <div class="card-footer">
+                <div class="stats">
+                    <i class="material-icons">update</i> Recién actualizado
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+
+    <div class="col-lg-4 col-md-12 col-sm-12">
+        <div class="card card-stats">
+            <div class="card-header card-header-info card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">location_on</i>
+                </div>
+                <p class="card-category">Recintos</p>
+                <h3 class="card-title">@ViewBag.Recintos.Count</h3>
+            </div>
+            <div class="card-footer">
+                <div class="stats">
+                    <i class="material-icons">update</i> Recién actualizado
+                </div>
+            </div>
+        </div>
     </div>
+
 </div>
+
+
+
+
+<div class="row">
+
+
+    <div class="card col-lg-7 col-md-7 col-sm-12">
+        <div class="card-header card-header-rose text-center">
+            <h4 class="card-title">Ubicación Fisica de Recintos</h4>
+            <p class="card-category">Nuevos Recintos de @DateTime.Now.Year</p>
+        </div>
+        <div class="card-body table-responsive">
+            <div id="map" style="height:400px" class="my-4 shadow p-3 mb-5 bg-white rounded"></div>
+        </div>
+    </div>
+
+
+    
+        
+    
+
+    <div class="col-lg-5 col-md-5 col-sm-12">
+        <div class="">
+
+            <div class="card card-stats" style="margin-top:110px">
+                <div class="card-header card-header-success card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">event</i>
+                    </div>
+                    <p class="card-category">Agendamiento</p>
+                    <h3 class="card-title">@ViewBag.Agendas.Count</h3>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">update</i> Recién actualizado
+                    </div>
+                </div>
+            </div>
+            <div class="card card-stats " style="margin-top:110px" >
+                <div class="card-header card-header-rose card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">alarm</i>
+                    </div>
+                    <p class="card-category">Proximo Evento a Realizarse</p>
+                    @{
+                DateTime fechaInicio;
+                DateTime esteDia = DateTime.Today;
+                int proximo;
+                foreach (var item in (List<Agenda>)ViewBag.Agendas)
+                {
+
+                    fechaInicio = Convert.ToDateTime(@Html.DisplayFor(modelItem => item.HoraTermino).ToString());
+                    proximo = DateTime.Compare(esteDia, fechaInicio);
+                    if (proximo < 0)
+                    {
+                        <h3 class="card-title text-danger">@Html.DisplayFor(modelItem => item.Evento.Nombre)</h3>
+                        <h5 class="card-title">Inicio: @Html.DisplayFor(modelItem => item.HoraInicio)</h5>
+                break;
+            }
+            else
+            {
+                <h3 class="card-title text-success">No hay Proximos Eventos</h3>
+    }
+
+}
+                    }
+
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">update</i> Recién actualizado
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="card card-nav-tabs card-plain">
+        <div class="card-header card-header-primary">
+            <!-- colors: "header-primary", "header-info", "header-success", "header-warning", "header-danger" -->
+            <div class="nav-tabs-navigation">
+                <div class="nav-tabs-wrapper">
+                    <ul class="nav nav-tabs" data-tabs="tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#usuarios" data-toggle="tab"><i class="material-icons">account_box</i>Usuarios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#agendamiento" data-toggle="tab"><i class="material-icons">event</i>Agenda</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#eventos" data-toggle="tab"><i class="material-icons">star</i>Eventos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#recintos" data-toggle="tab"><i class="material-icons">location_on</i>Recintos</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div><div class="card-body ">
+            <div class="tab-content text-center">
+                <div class="tab-pane active" id="usuarios">
+                    <div class="col-lg-12 col-md-12">
+                        <div class="card">
+                            <div class="card-header card-header-warning">
+                                <h4 class="card-title">Usuarios del Sistema</h4>
+                                <p class="card-category">Nuevos Usuarios de @DateTime.Now.Year</p>
+                            </div>
+                            <div class="card-body table-responsive">
+                                <table class="table table-hover">
+                                    <thead class="text-warning">
+                                        <tr>
+                                            <th>User Name</th>
+                                            <th>Password</th>
+                                            <th>Fecha de Ingreso</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in (List<Usuario>)ViewBag.Usuarios)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Administrador.Username)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Password)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.FechaInscripcion)
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="agendamiento">
+                    <div class="col-lg-12 col-md-12">
+                        <div class="card">
+                            <div class="card-header card-header-success">
+                                <h4 class="card-title">Eventos Agendados</h4>
+                                <p class="card-category">Nuevos Eventos Agendados de @DateTime.Now.Year</p>
+                            </div>
+                            <div class="card-body table-responsive">
+                                <table class="table table-hover">
+                                    <thead class="text-warning">
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th>Descripción</th>
+                                            <th>Hora de Inicio</th>
+                                            <th>Hora de Termino</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in (List<Agenda>)ViewBag.Agendas)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Evento.Nombre)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Evento.Descripcion)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.HoraInicio)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.HoraTermino)
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="eventos">
+                    <div class="col-lg-12 col-md-12">
+                        <div class="card">
+                            <div class="card-header card-header-danger">
+                                <h4 class="card-title">Eventos</h4>
+                                <p class="card-category">Nuevos Eventos de @DateTime.Now.Year</p>
+                            </div>
+                            <div class="card-body table-responsive">
+                                <table class="table table-hover">
+                                    <thead class="text-warning">
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th>Estado</th>
+                                            <th>Categoria</th>
+                                            <th>Encargado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in (List<Evento>)ViewBag.Eventos)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Nombre)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.EstadoEvento.Nombre)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Categoria.Nombre)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Administrador.Username)
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="recintos">
+                    <div class="col-lg-12 col-md-12">
+                        <div class="card">
+                            <div class="card-header card-header-info ">
+                                <h4 class="card-title">Recintos Creados</h4>
+                                <p class="card-category">Nuevos Recintos de @DateTime.Now.Year</p>
+                            </div>
+                            <div class="card-body table-responsive">
+                                <table class="table table-hover" id="mitabla">
+                                    <thead class="text-warning">
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th>Latitud</th>
+                                            <th>Longitud</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in (List<Recinto>)ViewBag.Recintos)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Nombre)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Latitud)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Longitud)
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    function inicializacion() {
+
+        //Creo un nuevo mapa situado en Inacap, Antofagasta
+        var mapa = new google.maps.Map(document.getElementById("map"), {
+            center: new google.maps.LatLng(-23.560014050233416, -70.40047645568848),
+            zoom: 17,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+
+        //Inicializar marcador de la ubicación
+
+        var tabla2 = document.getElementById("mitabla");
+        var tdsTabla2 = tabla2.getElementsByTagName("td");
+        var i = 0;
+        var contador = 0;
+        var inputNombre;
+        var inputLongitud;
+        var inputLatitud;
+        for (i = 0; i < tdsTabla2.length; i++) {
+
+            contador++
+            if (contador == 1) {
+                inputNombre = tdsTabla2[i].innerHTML;
+            } else if (contador == 2) {
+                inputLatitud = tdsTabla2[i].innerHTML;
+            } else if (contador == 3) {
+                inputLongitud = tdsTabla2[i].innerHTML;
+                var coordenadas = new google.maps.LatLng(inputLatitud, inputLongitud);
+                var marcador = new google.maps.Marker({ position: coordenadas, map: mapa, animation: google.maps.Animation.DROP, title: inputNombre });
+                contador = 0;
+            }
+
+        }
+
+
+    }
+
+</script>
