@@ -104,9 +104,16 @@ namespace SicoInacap.Controllers
         {
             Miembro miembro = db.Miembro.Find(usuarioId);
             if (miembro == null) RedirectToAction("Index");
+            try
+            {
+                db.Miembro.Remove(miembro);
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
 
-            db.Miembro.Remove(miembro);
-            db.SaveChanges();
+                return RedirectToAction("Index");
+            }
 
             return RedirectToAction("Index");
         }
@@ -129,6 +136,7 @@ namespace SicoInacap.Controllers
         {
             if (ModelState.IsValid)
             {
+                usuario.FechaInscripcion = DateTime.Today;
                 db.Usuario.Add(usuario);
                 db.SaveChanges();
                 return RedirectToAction("Index");
