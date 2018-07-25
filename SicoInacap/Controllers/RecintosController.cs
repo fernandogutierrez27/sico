@@ -46,7 +46,7 @@ namespace SicoInacap.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Codigo,Latitud,Longitud,Nombre")] Recinto recinto)
+        public ActionResult Create([Bind(Include = "Latitud,Longitud,Nombre")] Recinto recinto)
         {
             if (ModelState.IsValid)
             {

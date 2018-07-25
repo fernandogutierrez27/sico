@@ -51,7 +51,7 @@ namespace SicoInacap.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Codigo,CodigoCategoria,CodigoEstado,Descripcion,Nombre,UsernameOrganizador,UsernameResponsable")] Evento evento)
+        public ActionResult Create([Bind(Include = "CodigoCategoria,CodigoEstado,Descripcion,Nombre,UsernameOrganizador,UsernameResponsable")] Evento evento)
         {
             if (ModelState.IsValid)
             {

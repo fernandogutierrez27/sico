@@ -4,77 +4,130 @@
     ViewBag.Title = "Index";
 }
 
-<h2 class="tituloGestion">Gestion de Usuarios</h2>
+<nav aria-label="breadcrumb" class="mt-2">
+    <ol class="breadcrumb bg-dark">
+        <li class="breadcrumb-item">@Html.ActionLink("Gestion de Usuarios", "Index", "Usuarios", null)</li>
+    </ol>
+</nav>
+<span class="label label-success">
 
-<p class="btnCrear">
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table tabla">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Username)
-        </th>
-        @*<th>
-                @Html.DisplayNameFor(model => model.Miembro.Fono)
-            </th>*@
-        @*<th>
-                @Html.DisplayNameFor(model => model.Simpatizante.Apellidos)
-            </th>*@
-        <th>
-            @Html.DisplayNameFor(model => model.FechaInscripcion)
-        </th>
-        <th>Tipo</th>
-        <th>Administrador</th>
-        <th></th>
-    </tr>
+</span>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Username)
-        </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.Miembro.Fono)
-        </td>*@
-        @*<td>
-            @Html.DisplayFor(modelItem => item.Simpatizante.Apellidos)
-        </td>*@
-        <td>
-            @Html.DisplayFor(modelItem => item.FechaInscripcion)
-        </td>
-        <td>@(item.Miembro == null ? "Simpatizante" : "Miembro")</td>
-        <td class="text-center">
-            @(item.Administrador == null ? "No" : "Sí")
-        </td>
-        <td>
-            @if (item.Miembro == null)
-            {
-                @Html.ActionLink("Convertir en Miembro", "ConvertirMiembro", new { usuarioId = item.Username })
+<span class="badge badge-pill badge-primary mb-2">
+    @Html.ActionLink("Crear Nuevo Usuario", "Create", null, new { @class = "nav-link text-light" })
+</span>
 
-            }
-            else
-            {
-                @Html.ActionLink("Convertir en Simpatizante", "ConvertirSimpatizante", new { usuarioId = item.Username })
-            }
-            |
-            @if (item.Administrador == null)
-            {
-                @Html.ActionLink("Promover a Administrador", "PromoverAdmin", new { usuarioId = item.Username })
 
-                }
-                else
+<div class="card">
+    <div class="card-header card-header-success text-center">
+        <h4 class="card-title">Nuestros Usuarios</h4>
+    </div>
+    <div class="card-body table-responsive">
+        <table class="table bg-dark text-light rounded">
+            <thead class="text-primary text-center">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Administrador.Username)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Miembro.Fono)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Simpatizante.Apellidos)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FechaInscripcion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Password)
+                    </th>
+                    <th>
+                        Acciones
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                @foreach (var item in Model)
                 {
-                    @Html.ActionLink("Remover Administrador", "RemoverAdmin", new { usuarioId = item.Username })
-                }
-                |
-                @Html.ActionLink("Edit", "Edit", new { id = item.Username }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Username }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Username })
-            </td>
-        </tr>
-    }
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Administrador.Username)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Miembro.Fono)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Simpatizante.Apellidos)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaInscripcion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Password)
+                    </td>
+                    <td class="td-actions text-center">
+                        <a href="@Url.Action("Edit", "Usuarios",new { id = item.Username })" class="btn btn-warning">
+                            <i class="material-icons">edit</i>
+                            <span>
+                                <strong>Editar</strong>
+                            </span>
+                        </a>
+                        <a href="@Url.Action("Details", "Usuarios",new { id = item.Username })" class="btn btn-info">
+                            <i class="material-icons">recent_actors</i>
+                            <span>
+                                <strong>Detalles</strong>
+                            </span>
+                        </a>
+                        <a href="@Url.Action("Delete", "Usuarios",new { id = item.Username })" class="btn btn-danger">
+                            <i class="material-icons">delete_sweep</i>
+                            <span>
+                                <strong>Eliminar</strong>
+                            </span>
+                        </a>
+                    </td>
+                    <td class="text-white"><style>
+                        a{
+                            color:white!important;
+                        }
+                        </style>
+                        @if (item.Miembro == null)
+                        {
+                            @Html.ActionLink("Convertir en Miembro", "ConvertirMiembro", new { usuarioId = item.Username })
 
-</table>
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Convertir en Simpatizante", "ConvertirSimpatizante", new { usuarioId = item.Username })
+                        }
+                        |
+                        @if (item.Administrador == null)
+                        {
+                            @Html.ActionLink("Promover a Administrador", "PromoverAdmin", new { usuarioId = item.Username })
+
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Remover Administrador", "RemoverAdmin", new { usuarioId = item.Username })
+                        }
+                        |
+                        
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
 <aside class="bgModalVentana">
     <div class="modalVentana"></div>
 </aside>

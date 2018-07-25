@@ -18,7 +18,7 @@ namespace SicoInacap.Models
         }
 
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Codigo { get; set; }
         public int CodigoCategoria { get; set; }
 
