@@ -90,6 +90,7 @@ namespace SicoInacap.Controllers
         {
             if (ModelState.IsValid)
             {
+                miembro.FechaIngreso = DateTime.Today;
                 db.Miembro.Add(miembro);
                 db.SaveChanges();
                 return RedirectToAction("Index");
