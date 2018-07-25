@@ -23,11 +23,8 @@
         <th>
             @Html.DisplayNameFor(model => model.FechaInscripcion)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Password)
-        </th>
         <th>Tipo</th>
-        <th>¿Es Administrador?</th>
+        <th>Administrador</th>
         <th></th>
     </tr>
 
@@ -44,9 +41,6 @@
         </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.FechaInscripcion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Password)
         </td>
         <td>@(item.Miembro == null ? "Simpatizante" : "Miembro")</td>
         <td class="text-center">
